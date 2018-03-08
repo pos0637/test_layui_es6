@@ -1,4 +1,5 @@
 
+import $ from 'jQuery';
 import BaseComponent from '../base';
 
 /**
@@ -15,11 +16,7 @@ export default class TreeGrid extends BaseComponent {
         /** 
          * 表格布局
          */
-        this.layout = null;
-    }
-
-    setLayout(layout) {
-        this.element.children('.Layout');
+        this.layout = this._getLayout();
     }
 
     render() {
@@ -54,6 +51,47 @@ export default class TreeGrid extends BaseComponent {
             nodes: data,
             layout: this.layout
         });
+    }
+
+    /**
+     * 获取布局
+     * 
+     * @returns 布局
+     * @memberof TreeGrid
+     */
+    _getLayout() {
+        let layout = this.element.children('.Layout');
+        if (!layout)
+            return [];
+
+        let cols = [];
+
+        $.each(layout.children(), function () {
+            let node = $(this);
+            let col = {};
+
+            if (node.attr('name'))
+                col['name'] = node.attr('name');
+
+            if (node.attr('treeNodes'))
+                col['treeNodes'] = node.attr('treeNodes');
+
+            if (node.attr('style'))
+                col['style'] = node.attr('style');
+
+            if (node.attr('headerClass'))
+                col['headerClass'] = node.attr('headerClass');
+
+            if (node.attr('colClass'))
+                col['colClass'] = node.attr('colClass');
+
+            if (node.attr('templet'))
+                col['templet'] = node.attr('templet');
+
+            cols.push(col);
+        });
+
+        return cols;
     }
 }
 

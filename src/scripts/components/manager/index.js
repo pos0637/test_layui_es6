@@ -35,31 +35,30 @@ export default class Manager {
         // 加载所有依赖模块
         layui.use(modules, () => {
             Tracker.trace('layui is ready');
+            let components = [];
             for (let i = 0; i < classes.length; ++i) {
                 let clazz = classes[i];
                 let filter = clazz.filter ? clazz.filter : null;
-                if (!filter) {
+                if (!filter)
                     continue;
-                }
 
                 // 创建组件
-                let elements = $(filter);
+                let elements = $(filter);                
                 $(elements).each((index, element) => {
                     let component = new clazz({
                         id: element.id,
                         element: $('#' + element.id)
                     });
                     Manager.components[element.id] = component;
-                    Manager.components.push(component);
+                    components.push(component);
                 });
             }
 
             Tracker.trace('components is ready');
-            for (let i = 0; i < Manager.components.length; ++i) {
-                let component = Manager.components[i];
+            for (let i = 0; i < components.length; ++i) {
+                let component = components[i];
                 component.render();
             }
-            Manager.components.clean();
 
             Tracker.trace('components render finish');
         });
@@ -70,3 +69,7 @@ export default class Manager {
  * 组件列表
  */
 Manager.components = [];
+
+export function initialize() {
+    Manager.initialize();
+}

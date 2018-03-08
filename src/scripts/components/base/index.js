@@ -23,5 +23,5 @@ export default class BaseComponent {
 
 BaseComponent.propTypes = {
     id: PropTypes.string,
-    element: PropTypes.element,
-}
+    element: PropTypes.element
+};

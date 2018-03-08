@@ -1,4 +1,3 @@
 
-import Manager from './components/manager';
-
-Manager.initialize();
+const { initialize } = require('./components/manager');
+initialize();
