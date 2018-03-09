@@ -21,11 +21,18 @@
 
 <body>
     <h1>你好，世界！</h1>
-    <div id="TreeTable1" class="TreeTable">
+    <div id="TreeTable1" class="TreeTable" url="api/v1/system/permissions">
         <div class="Layout">
             <p name="name" treeNodes="true" headerClass="value_col" />
-            <p name="path" headerClass="value_col" colClass="value_col" style="width: 15%" templet="#stateTpl" />
+            <p name="path" headerClass="value_col" colClass="value_col" style="width: 15%" />
+            <p name="action" headerClass="value_col" colClass="value_col" style="width: 15%" templet="#bar1" />
         </div>
+        <script type="text/html" id="bar1">
+            <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="top" topUrl="ui/system/resources/edit.html" topMode="readonly" topWidth="800px" topHeight="500px" topTitle="查看" inputs="id:">查看</a>
+            <a class="layui-btn layui-btn-xs" lay-event="top" topUrl="ui/system/resources/edit.html" topWidth="800px" topHeight="500px" topTitle="编辑" inputs="id:">编辑</a>
+            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="submit" url="api/v1/system/resources" method="DELETE" isConfirm="1" confirmMsg="是否确定删除当前记录？" inputs="id:">删除</a>
+        </script>
+        <div class="Content"></div>
     </div>
 </body>
 

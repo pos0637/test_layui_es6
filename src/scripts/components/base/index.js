@@ -17,4 +17,12 @@ export default class BaseComponent {
          */
         this.element = props.element;
     }
+
+    /**
+     * 渲染组件
+     * 
+     * @memberof BaseComponent
+     */
+    render() {
+    }
 }

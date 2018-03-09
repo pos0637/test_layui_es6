@@ -1,5 +1,6 @@
 
 import BaseComponent from '../base';
+import Request from '../../misc/request';
 
 /**
  * 树状表格
@@ -11,6 +12,11 @@ import BaseComponent from '../base';
 export default class TreeGrid extends BaseComponent {
     constructor(props) {
         super(props);
+
+        /** 
+         * 请求地址
+         */
+        this.url = this.element.attr('url');
 
         /** 
          * 表格布局
@@ -44,11 +50,22 @@ export default class TreeGrid extends BaseComponent {
             },
         ];
 
-        this.element.empty();
-        layui.treeGird({
-            elem: this.element,
-            nodes: data,
-            layout: this.layout
+        new Request(this.url).get((result) => {
+            this.element.children('.Content').empty();
+            layui.treeGird({
+                elem: this.element.children('.Content'),
+                nodes: result.data,
+                layout: this.layout
+            });
+        }, () => {
+            this.element.children('.Content').empty();
+            layui.treeGird({
+                elem: this.element.children('.Content'),
+                nodes: data,
+                layout: this.layout
+            });
+            // TODO: fix style
+            this.element.after('无数据');
         });
     }
 
@@ -87,6 +104,14 @@ export default class TreeGrid extends BaseComponent {
             if (node.attr('templet'))
                 col['templet'] = node.attr('templet');
 
+            col['render'] = function (row) {
+                let templet = col['templet'];
+                if (templet)
+                    return layui.laytpl($(templet).html() || '').render(row);
+                else
+                    return row[col['name']];
+            };
+
             cols.push(col);
         });
 
@@ -102,4 +127,4 @@ TreeGrid.filter = 'div.TreeTable';
 /**
  * 依赖模块
  */
-TreeGrid.imports = ['tree'];
+TreeGrid.imports = ['tree', 'laytpl'];
