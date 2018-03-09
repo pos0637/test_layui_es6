@@ -1,5 +1,4 @@
 
-import $ from 'jQuery';
 import Tracker from '../../misc/tracker';
 import DataGrid from '../dataGrid';
 import TreeGrid from '../treeGrid';
@@ -43,7 +42,7 @@ export default class Manager {
                     continue;
 
                 // 创建组件
-                let elements = $(filter);                
+                let elements = $(filter);
                 $(elements).each((index, element) => {
                     let component = new clazz({
                         id: element.id,

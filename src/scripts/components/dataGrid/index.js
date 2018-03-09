@@ -14,6 +14,6 @@ export default class DataGrid extends BaseComponent {
     }
 
     render() {
-        
+
     }
 }

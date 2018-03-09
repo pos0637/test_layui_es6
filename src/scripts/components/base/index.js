@@ -1,6 +1,4 @@
 
-import PropTypes from 'prop-types';
-
 /**
  * 基础组件
  * 
@@ -20,8 +18,3 @@ export default class BaseComponent {
         this.element = props.element;
     }
 }
-
-BaseComponent.propTypes = {
-    id: PropTypes.string,
-    element: PropTypes.element
-};

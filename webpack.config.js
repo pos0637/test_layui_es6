@@ -4,7 +4,7 @@ var copyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     entry: {
-        main: ['babel-polyfill', 'es6-promise', 'fetch-ie8', './src/scripts/main.js']
+        main: './src/scripts/main.js'
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -17,7 +17,7 @@ module.exports = {
                 test: /\.js$/,
                 loader: 'babel-loader',
                 include: path.resolve(__dirname, 'src'),
-                exclude: path.resolve(__dirname, 'node_modules')
+                exclude: [path.resolve(__dirname, 'node_modules'), path.resolve(__dirname, 'html')]
             },
             {
                 test: /\.js$/,

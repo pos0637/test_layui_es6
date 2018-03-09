@@ -1,5 +1,4 @@
 
-import $ from 'jQuery';
 import BaseComponent from '../base';
 
 /**
