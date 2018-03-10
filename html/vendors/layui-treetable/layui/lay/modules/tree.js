@@ -69,7 +69,7 @@ layui.define("jquery", function(e) {
         }, i.prototype.initGird = function(e) {
             var ob = this, i = ob.options;
             var tableHeaderStr = '<thead><tr>';
-            tableHeaderStr += (i.checkbox == false ? '<th style="width:10px"></th>' : '<th style="width:10px"><!--<input type="checkbox" name="treeGirdCheckbox" lay-skin="primary" lay-filter="*">--></th>');
+            tableHeaderStr += (!i.checkbox ? (i.id ? '<th style="width:10px"></th>': '') : '<th style="width:10px"><!--<input type="checkbox" name="treeGirdCheckbox" lay-skin="primary" lay-filter="*">--></th>');
             for (var ind = 0; ind < i.layout.length; ind++) {
                 var headerClass = i.layout[ind].headerClass ? ' class="' + i.layout[ind].headerClass + '"' : '';
                 tableHeaderStr += '<th' + headerClass + '>' + i.layout[ind].name + '</th>';
@@ -144,7 +144,7 @@ layui.define("jquery", function(e) {
                         function() {
                             if (i.checkbox){
                                 return '<td><input type="checkbox" name="treeGirdCheckbox" lay-skin="primary" lay-filter="*" value="' + n.id + '"></td>';
-                            }else{
+                            }else if (i.id){
                                 return '<td>' + index + '</td>';
                             }
                         }(), 

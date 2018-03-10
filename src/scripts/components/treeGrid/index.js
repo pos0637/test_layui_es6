@@ -24,25 +24,21 @@ export default class TreeGrid extends BaseGrid {
         // TODO: delete it
         let data = [
             {
-                id: 1,
-                level: 1,
+                id: 0,
                 name: 'test1',
                 path: 'xxxxx',
-                open: true,
                 children: [
-                    { id: 3, parentId: 1, level: 2, name: 'test1_1', path: 'xxxxx', open: true },
-                    { id: 4, parentId: 1, level: 2, name: 'test1_2', path: 'xxxxx', open: true }
+                    { id: 3, name: 'test1_1', path: 'xxxxx', open: true },
+                    { id: 4, name: 'test1_2', path: 'xxxxx', open: true }
                 ]
             },
             {
-                id: 2,
-                level: 1,
+                id: 1,
                 name: 'test2',
-                open: true,
                 path: 'xxxxx',
                 children: [
-                    { id: 5, parentId: 2, level: 2, name: 'test2_1', path: 'xxxxx', open: true },
-                    { id: 6, parentId: 2, level: 2, name: 'test2_2', path: 'xxxxx', open: true }
+                    { id: 5, name: 'test2_1', path: 'xxxxx', open: true },
+                    { id: 6, name: 'test2_2', path: 'xxxxx', open: true }
                 ]
             },
         ];
@@ -54,22 +50,26 @@ export default class TreeGrid extends BaseGrid {
 
         // 请求数据
         new Request(this.url, params).get((result) => {
-            this.element.children('.Content').empty();
+            this.element.children('.layui-content').empty();
             layui.treeGird({
-                elem: this.element.children('.Content'),
+                elem: this.element.children('.layui-content'),
+                spreadable: true,
                 nodes: result.data,
                 layout: this.layout
             });
+            layui.form.render();
             this._bindEvent();
         }, () => {
-            this.element.children('.Content').empty();
+            this.element.children('.layui-content').empty();
             layui.treeGird({
-                elem: this.element.children('.Content'),
+                elem: this.element.children('.layui-content'),
+                spreadable: true,
                 nodes: data,
                 layout: this.layout
             });
             // TODO: fix style
-            this.element.after('无数据');
+            this.element.children('.layui-content').append('无数据');
+            layui.form.render();
             this._bindEvent();
         });
     }
@@ -81,7 +81,7 @@ export default class TreeGrid extends BaseGrid {
      * @memberof TreeGrid
      */
     _getLayout() {
-        let layout = this.element.children('.Layout');
+        let layout = $(this.element.attr('layout'));
         if (!layout)
             return [];
 
@@ -93,6 +93,9 @@ export default class TreeGrid extends BaseGrid {
 
             if (node.attr('name'))
                 col['name'] = node.attr('name');
+
+            if (node.attr('field'))
+                col['field'] = node.attr('field');
 
             if (node.attr('treeNodes'))
                 col['treeNodes'] = node.attr('treeNodes');
@@ -114,7 +117,7 @@ export default class TreeGrid extends BaseGrid {
                 if (templet)
                     return layui.laytpl($(templet).html() || '').render(row);
                 else
-                    return row[col['name']];
+                    return row[col['field']];
             };
 
             cols.push(col);
@@ -186,4 +189,4 @@ TreeGrid.filter = 'div.TreeTable';
 /**
  * 依赖模块
  */
-TreeGrid.imports = ['tree', 'laytpl'];
+TreeGrid.imports = ['tree', 'form', 'laytpl'];

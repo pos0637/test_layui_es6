@@ -13,6 +13,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" />
     <link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="vendors/layui-treetable/layui/css/layui.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="vendors/layui.css" media="all" />
     <script type="text/javascript" src="https://cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
     <script type="text/javascript" src="vendors/layui-treetable/layui/layui.js"></script>
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
@@ -46,18 +47,18 @@
             </div>
         </form>
     </div>
-    <div id="TreeTable1" class="TreeTable" url="api/v1/system/permissions" toolbar="#toolbar1">
-        <div class="Layout">
-            <p name="name" treeNodes="true" headerClass="value_col" />
-            <p name="path" headerClass="value_col" colClass="value_col" style="width: 15%" />
-            <p name="action" headerClass="value_col" colClass="value_col" style="width: 15%" templet="#bar1" />
+    <div id="TreeTable1" class="TreeTable" url="api/v1/system/permissions" layout="#layout1" toolbar="#toolbar1">
+        <div id="layout1" class="layui-layout">
+            <p name="菜单名称" field="name" treeNodes="true" headerClass="value_col" />
+            <p name="路径" field="path" headerClass="value_col" colClass="value_col" style="width: 15%" />
+            <p name="操作" templet="#bar1" headerClass="value_col" colClass="value_col" style="width: 15%" />
         </div>
         <script type="text/html" id="bar1">
             <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="open" url="ui/system/resources/edit.html?id={{d.id}}&readonly=true" topWidth="800px" topHeight="500px" topTitle="查看">查看</a>
             <a class="layui-btn layui-btn-xs" lay-event="edit" url="ui/system/resources/edit.html?id={{d.id}}" topWidth="800px" topHeight="500px" topTitle="编辑">编辑</a>
             <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete" url="api/v1/system/resource/{{d.id}}" isConfirm="1" confirmMsg="是否确定删除当前记录？">删除</a>
         </script>
-        <div class="Content"></div>
+        <div class="layui-content"></div>
     </div>
 </body>
 
