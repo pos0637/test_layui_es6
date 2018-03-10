@@ -14,4 +14,4 @@ export default class Hint {
 /**
  * 依赖模块
  */
-Request.imports = ['layer'];
+Hint.imports = ['layer'];

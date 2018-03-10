@@ -19,12 +19,18 @@ export default class TreeGrid extends BaseComponent {
         this.url = this.element.attr('url');
 
         /** 
+         * 查询表单
+         */
+        this.queryForm = this.element.attr('query');
+
+        /** 
          * 表格布局
          */
         this.layout = this._getLayout();
     }
 
     render() {
+        // TODO: delete it
         let data = [
             {
                 id: 1,
@@ -50,7 +56,11 @@ export default class TreeGrid extends BaseComponent {
             },
         ];
 
-        new Request(this.url).get((result) => {
+        let params = {};
+        if (this.queryForm)
+            $.extend(params, this._getFormData($(this.queryForm)), params);
+
+        new Request(this.url, params).get((result) => {
             this.element.children('.Content').empty();
             layui.treeGird({
                 elem: this.element.children('.Content'),
@@ -116,6 +126,37 @@ export default class TreeGrid extends BaseComponent {
         });
 
         return cols;
+    }
+
+    /**
+     * 获取表单数据
+     * 
+     * @param {any} form 表单
+     * @returns 表单数据
+     * @memberof TreeGrid
+     */
+    _getFormData(form) {
+        let elements = form.find('input,select,textarea');
+        let data = {};
+
+        $.each(elements, function (i, element) {
+            if (!element.name)
+                return;
+
+            if (/^checkbox|radio$/.test(element.type) && !element.checked)
+                return;
+
+            let value = element.value;
+            if (element.type === 'checkbox') {
+                if (data[element.name])
+                    value = data[element.name] + ',' + value;
+            }
+
+            if (value)
+                data[element.name] = value;
+        });
+
+        return data;
     }
 }
 
