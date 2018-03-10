@@ -20,10 +20,10 @@ export default class Popup {
      * @memberof Popup
      */
     static show(title, width, height, url, isMaximize, onClose) {
-        if (!width)
+        if ($.isEmpty(width))
             width = '700px';
 
-        if (!height)
+        if ($.isEmpty(height))
             height = '400px';
 
         if (parseInt(width.replace(/[^0-9]/ig, '')) > $(window.top.document).width())

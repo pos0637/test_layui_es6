@@ -13,11 +13,6 @@ import Popup from '../../misc/popup';
 export default class TreeGrid extends BaseGrid {
     constructor(props) {
         super(props);
-
-        /** 
-         * 表格布局
-         */
-        this.layout = this._getLayout();
     }
 
     render() {
@@ -45,8 +40,23 @@ export default class TreeGrid extends BaseGrid {
 
         let params = {};
         // 获取查询数据
-        if (this.toolbar)
-            $.extend(params, this._getToolbarData(this.toolbar), params);
+        if (!$.isEmpty(this.querybar))
+            $.extend(params, this._getQuerybarData(this.querybar), params);
+
+        // 空数据处理函数
+        let handler = () => {
+            this.element.children('.layui-content').empty();
+            layui.treeGird({
+                elem: this.element.children('.layui-content'),
+                spreadable: true,
+                nodes: data,
+                layout: this.layout
+            });
+            // TODO: fix style
+            this.element.children('.layui-content').append('无数据');
+            layui.form.render();
+            this._bindEvent();
+        };
 
         // 请求数据
         if (this.autoload) {
@@ -60,28 +70,13 @@ export default class TreeGrid extends BaseGrid {
                 });
                 layui.form.render();
                 this._bindEvent();
-            }, () => {
-                this.element.children('.layui-content').empty();
-                layui.treeGird({
-                    elem: this.element.children('.layui-content'),
-                    spreadable: true,
-                    nodes: data,
-                    layout: this.layout
-                });
-                // TODO: fix style
-                this.element.children('.layui-content').append('无数据');
-                layui.form.render();
-                this._bindEvent();
-            });
+            }, handler);
+        }
+        else {
+            handler();
         }
     }
 
-    /**
-     * 获取布局
-     * 
-     * @returns 布局
-     * @memberof TreeGrid
-     */
     _getLayout() {
         let layout = $(this.element.attr('layout'));
         if (!layout)
@@ -93,30 +88,11 @@ export default class TreeGrid extends BaseGrid {
             let node = $(this);
             let col = {};
 
-            if (node.attr('name'))
-                col['name'] = node.attr('name');
-
-            if (node.attr('field'))
-                col['field'] = node.attr('field');
-
-            if (node.attr('treeNodes'))
-                col['treeNodes'] = node.attr('treeNodes');
-
-            if (node.attr('style'))
-                col['style'] = node.attr('style');
-
-            if (node.attr('headerClass'))
-                col['headerClass'] = node.attr('headerClass');
-
-            if (node.attr('colClass'))
-                col['colClass'] = node.attr('colClass');
-
-            if (node.attr('templet'))
-                col['templet'] = node.attr('templet');
+            $.assignAttr(col, node, 'name', 'field', 'treeNodes', 'style', 'headerClass', 'colClass', 'templet');
 
             col['render'] = function (row) {
                 let templet = col['templet'];
-                if (templet)
+                if (!$.isEmpty(templet))
                     return layui.laytpl($(templet).html() || '').render(row);
                 else
                     return row[col['field']];
@@ -134,36 +110,27 @@ export default class TreeGrid extends BaseGrid {
     }
 
     _onOpenButtonClick(sender) {
-        let url = sender.attr('url');
-        let title = sender.attr('topTitle');
-        let width = sender.attr('topWidth');
-        let height = sender.attr('topHeight');
-        let isMaximize = sender.attr('isMaximize') && (sender.attr('isMaximize') === 'true');
+        let params = $.assignAttr({}, sender, 'url', 'topTitle', 'topWidth', 'topHeight', 'isMaximize');
+        params.isMaximize = $.isEmpty(params.isMaximize) ? false : params.isMaximize === 'true';
 
-        Popup.show(title, width, height, url, isMaximize);
+        Popup.show(params.title, params.width, params.height, params.url, params.isMaximize);
     }
 
     _onCreateButtonClick(sender) {
-        let url = sender.attr('url');
-        let title = sender.attr('topTitle');
-        let width = sender.attr('topWidth');
-        let height = sender.attr('topHeight');
-        let isMaximize = sender.attr('isMaximize') && (sender.attr('isMaximize') === 'true');
+        let params = $.assignAttr({}, sender, 'url', 'topTitle', 'topWidth', 'topHeight', 'isMaximize');
+        params.isMaximize = $.isEmpty(params.isMaximize) ? false : params.isMaximize === 'true';
 
-        Popup.show(title, width, height, url, isMaximize, () => {
+        Popup.show(params.title, params.width, params.height, params.url, params.isMaximize, () => {
             if (this.refreshable)
                 this.render();
         });
     }
 
     _onEditButtonClick(sender) {
-        let url = sender.attr('url');
-        let title = sender.attr('topTitle');
-        let width = sender.attr('topWidth');
-        let height = sender.attr('topHeight');
-        let isMaximize = sender.attr('isMaximize') && (sender.attr('isMaximize') === 'true');
+        let params = $.assignAttr({}, sender, 'url', 'topTitle', 'topWidth', 'topHeight', 'isMaximize');
+        params.isMaximize = $.isEmpty(params.isMaximize) ? false : params.isMaximize === 'true';
 
-        Popup.show(title, width, height, url, isMaximize, () => {
+        Popup.show(params.title, params.width, params.height, params.url, params.isMaximize, () => {
             if (this.refreshable)
                 this.render();
         });
@@ -177,7 +144,7 @@ export default class TreeGrid extends BaseGrid {
             });
         };
 
-        if (sender.attr('isConfirm'))
+        if (!$.isEmpty(sender.attr('isConfirm')))
             Popup.confirm('询问', sender.attr('confirmMsg') && '是否确定操作选中的数据?', handler);
         else
             handler();

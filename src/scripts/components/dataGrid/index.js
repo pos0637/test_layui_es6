@@ -11,70 +11,71 @@ import BaseGrid from '../baseGrid';
 export default class DataGrid extends BaseGrid {
     constructor(props) {
         super(props);
+
+        /** 
+         * 数据表格
+         */
+        this.datagrid = null;
     }
 
     render() {
-        let height = this.element.attr('height');
-        if (!height)
-            height = 'full-135';
-
         let params = {};
         // 获取查询数据
-        if (this.toolbar)
-            $.extend(params, this._getToolbarData(this.toolbar), params);
+        if (!$.isEmpty(this.querybar))
+            $.extend(params, this._getQuerybarData(this.querybar), params);
 
+        let height = this.element.getAttr('height', 'full-135');
+        let paging = this.element.getAttr('paging', 'true');
+        let pageSize = this.element.getAttr('pageSize', '20');
 
+        this.datagrid = layui.table.render({
+            id: this.id,
+            elem: this.element,
+            url: this.url,
+            where: params,
+            page: paging === 'true',
+            method: 'get',
+            height: height,
+            limits: [10, 20, 30, 50, 100],
+            limit: pageSize,
+            cols: this.layout,
+            data: [],
+            request: { pageName: 'pageNum', limitName: 'pageSize' },
+            response: { statusName: 'code', statusCode: 200, msgName: 'message', countName: 'data.total', dataName: 'data.list' }
+        });
     }
 
-    /**
-     * 获取布局
-     * 
-     * @returns 布局
-     * @memberof TreeGrid
-     */
     _getLayout() {
         let layout = $(this.element.attr('layout'));
         if (!layout)
             return [];
 
+        let rows = [];
         let cols = [];
 
         $.each(layout.children(), function () {
             let node = $(this);
             let col = {};
 
-            if (node.attr('name'))
-                col['name'] = node.attr('name');
+            // 处理换行
+            let type = node.attr('type');
+            if (type === 'br') {
+                rows.push(cols);
+                cols = [];
+                return;
+            }
 
-            if (node.attr('field'))
-                col['field'] = node.attr('field');
-
-            if (node.attr('treeNodes'))
-                col['treeNodes'] = node.attr('treeNodes');
-
-            if (node.attr('style'))
-                col['style'] = node.attr('style');
-
-            if (node.attr('headerClass'))
-                col['headerClass'] = node.attr('headerClass');
-
-            if (node.attr('colClass'))
-                col['colClass'] = node.attr('colClass');
-
-            if (node.attr('templet'))
-                col['templet'] = node.attr('templet');
-
-            col['render'] = function (row) {
-                let templet = col['templet'];
-                if (templet)
-                    return layui.laytpl($(templet).html() || '').render(row);
-                else
-                    return row[col['field']];
-            };
+            $.assignAttr(col, node, 'align', 'fixed', 'style', 'colspan', 'rowspan');
+            if (!$.isEmpty(node.attr('toolbar'))) // 非工具栏列
+                $.assignAttr(col, node, 'type', 'field', 'title', 'width', 'sort', 'templet', 'checkbox', 'edit', 'event', 'LAY_CHECKED');
+            else // 工具栏列
+                $.assignAttr(col, node, 'width', 'title');
 
             cols.push(col);
         });
 
-        return cols;
+        rows.push(cols);
+
+        return rows;
     }
 }

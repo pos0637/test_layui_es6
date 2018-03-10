@@ -18,9 +18,9 @@ export default class BaseGrid extends BaseComponent {
         this.url = this.element.attr('url');
 
         /** 
-         * 工具栏
+         * 查询栏
          */
-        this.toolbar = $(this.element.attr('toolbar'));
+        this.querybar = $(this.element.attr('querybar'));
 
         /** 
          * 是否自动加载
@@ -31,21 +31,36 @@ export default class BaseGrid extends BaseComponent {
          * 是否可以刷新
          */
         this.refreshable = this.element.getAttr('refreshable', 'true') === 'true';
+
+        /** 
+         * 表格布局
+         */
+        this.layout = this._getLayout();
+    }
+
+    /**
+     * 获取布局
+     * 
+     * @returns 布局
+     * @memberof BaseGrid
+     */
+    _getLayout() {
+        return null;
     }
 
     /**
      * 获取查询数据
      * 
-     * @param {any} toolbar 工具条
+     * @param {any} querybar 查询栏
      * @returns 查询数据
      * @memberof BaseGrid
      */
-    _getToolbarData(toolbar) {
-        let elements = toolbar.find('input,select,textarea');
+    _getQuerybarData(querybar) {
+        let elements = querybar.find('input,select,textarea');
         let data = {};
 
         $.each(elements, function (i, element) {
-            if (!element.name)
+            if ($.isEmpty(element.name))
                 return;
 
             if (/^checkbox|radio$/.test(element.type) && !element.checked)
@@ -57,7 +72,7 @@ export default class BaseGrid extends BaseComponent {
                     value = data[element.name] + ',' + value;
             }
 
-            if (value)
+            if ($.isNotBlank(value))
                 data[element.name] = value;
         });
 
@@ -70,25 +85,25 @@ export default class BaseGrid extends BaseComponent {
      * @memberof BaseGrid
      */
     _bindEvent() {
-        this._bindToolbarButtonEvent();
+        this._bindQuerybarButtonEvent();
         this._bindGridButtonEvent();
     }
 
     /**
-     * 绑定工具条按钮事件
+     * 绑定查询栏按钮事件
      *
      * @memberof BaseGrid
      */
-    _bindToolbarButtonEvent() {
-        if (!this.toolbar)
+    _bindQuerybarButtonEvent() {
+        if ($.isEmpty(this.querybar))
             return;
 
         let _this = this;
-        let elements = this.toolbar.find('.layui-btn');
+        let elements = this.querybar.find('.layui-btn');
         $.each(elements, function () {
             let botton = $(this);
             let method = botton.attr('lay-event');
-            if (!method)
+            if ($.isEmpty(method))
                 return;
 
             botton.off('click');
@@ -116,7 +131,7 @@ export default class BaseGrid extends BaseComponent {
         $.each(elements, function () {
             let botton = $(this);
             let method = botton.attr('lay-event');
-            if (!method)
+            if ($.isEmpty(method))
                 return;
 
             botton.off('click');

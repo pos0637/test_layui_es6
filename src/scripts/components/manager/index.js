@@ -42,7 +42,7 @@ export default class Manager {
             for (let i = 0; i < classes.length; ++i) {
                 let clazz = classes[i];
                 let filter = clazz.filter ? clazz.filter : null;
-                if (!filter)
+                if ($.isEmpty(filter))
                     continue;
 
                 // 创建组件

@@ -23,7 +23,7 @@
 <body>
     <h1>你好，世界！</h1>
     <div class="layui-form-query">
-        <form class="layui-form" id="toolbar1">
+        <form class="layui-form" id="querybar1">
             <div class="layui-form-item">
                 <div class="layui-inline">
                     <label class="layui-form-mid">名称：</label>
@@ -47,7 +47,7 @@
             </div>
         </form>
     </div>
-    <div id="TreeTable1" class="TreeTable" url="api/v1/system/permissions" layout="#layout1" toolbar="#toolbar1">
+    <div id="TreeTable1" class="TreeTable" url="api/v1/system/permissions" layout="#layout1" querybar="#querybar1">
         <div id="layout1" class="layui-layout">
             <p name="菜单名称" field="name" treeNodes="true" headerClass="value_col" />
             <p name="路径" field="path" headerClass="value_col" colClass="value_col" style="width: 15%" />
