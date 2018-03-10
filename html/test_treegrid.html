@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="text/html;charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="vendors/layui-treetable/layui/css/layui.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="vendors/layui.css" media="all" />
+    <script type="text/javascript" src="https://cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <script type="text/javascript" src="vendors/layui-treetable/layui/layui.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <title></title>
+</head>
+
+<body>
+    <h1>你好，世界！</h1>
+    <div class="layui-form-query">
+        <form class="layui-form" id="toolbar1">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-mid">名称：</label>
+                    <div class="layui-input-inline" style="width: 200px;">
+                        <input type="text" name="name" autocomplete="off" class="layui-input" />
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-mid">路径：</label>
+                    <div class="layui-input-inline" style="width: 300px;">
+                        <input type="text" name="path" autocomplete="off" class="layui-input" />
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <div class="layui-input-inline">
+                        <button class="layui-btn" type="button" lay-event="query">
+                            <i class="layui-icon">&#xe615;</i>查询</button>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div id="TreeTable1" class="TreeTable" url="api/v1/system/permissions" layout="#layout1" toolbar="#toolbar1">
+        <div id="layout1" class="layui-layout">
+            <p name="菜单名称" field="name" treeNodes="true" headerClass="value_col" />
+            <p name="路径" field="path" headerClass="value_col" colClass="value_col" style="width: 15%" />
+            <p name="操作" templet="#bar1" headerClass="value_col" colClass="value_col" style="width: 15%" />
+        </div>
+        <script type="text/html" id="bar1">
+            <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="open" url="ui/system/resources/edit.html?id={{d.id}}&readonly=true" topWidth="800px" topHeight="500px" topTitle="查看">查看</a>
+            <a class="layui-btn layui-btn-xs" lay-event="edit" url="ui/system/resources/edit.html?id={{d.id}}" topWidth="800px" topHeight="500px" topTitle="编辑">编辑</a>
+            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete" url="api/v1/system/resource/{{d.id}}" isConfirm="1" confirmMsg="是否确定删除当前记录？">删除</a>
+        </script>
+        <div class="layui-content"></div>
+    </div>
+</body>
+
+</html>

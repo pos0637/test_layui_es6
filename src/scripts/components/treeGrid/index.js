@@ -49,29 +49,31 @@ export default class TreeGrid extends BaseGrid {
             $.extend(params, this._getToolbarData(this.toolbar), params);
 
         // 请求数据
-        new Request(this.url, params).get((result) => {
-            this.element.children('.layui-content').empty();
-            layui.treeGird({
-                elem: this.element.children('.layui-content'),
-                spreadable: true,
-                nodes: result.data,
-                layout: this.layout
+        if (this.autoload) {
+            new Request(this.url, params).get((result) => {
+                this.element.children('.layui-content').empty();
+                layui.treeGird({
+                    elem: this.element.children('.layui-content'),
+                    spreadable: true,
+                    nodes: result.data,
+                    layout: this.layout
+                });
+                layui.form.render();
+                this._bindEvent();
+            }, () => {
+                this.element.children('.layui-content').empty();
+                layui.treeGird({
+                    elem: this.element.children('.layui-content'),
+                    spreadable: true,
+                    nodes: data,
+                    layout: this.layout
+                });
+                // TODO: fix style
+                this.element.children('.layui-content').append('无数据');
+                layui.form.render();
+                this._bindEvent();
             });
-            layui.form.render();
-            this._bindEvent();
-        }, () => {
-            this.element.children('.layui-content').empty();
-            layui.treeGird({
-                elem: this.element.children('.layui-content'),
-                spreadable: true,
-                nodes: data,
-                layout: this.layout
-            });
-            // TODO: fix style
-            this.element.children('.layui-content').append('无数据');
-            layui.form.render();
-            this._bindEvent();
-        });
+        }
     }
 
     /**
@@ -127,7 +129,8 @@ export default class TreeGrid extends BaseGrid {
     }
 
     _onQueryButtonClick() {
-        this.render();
+        if (this.refreshable)
+            this.render();
     }
 
     _onOpenButtonClick(sender) {

@@ -23,9 +23,14 @@ export default class BaseGrid extends BaseComponent {
         this.toolbar = $(this.element.attr('toolbar'));
 
         /** 
+         * 是否自动加载
+         */
+        this.autoload = this.element.getAttr('autoload', 'true') === 'true';
+
+        /** 
          * 是否可以刷新
          */
-        this.refreshable = this.element.attr('refreshable') || true;
+        this.refreshable = this.element.getAttr('refreshable', 'true') === 'true';
     }
 
     /**
