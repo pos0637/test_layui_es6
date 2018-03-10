@@ -1,7 +1,9 @@
 
 import Tracker from '../../misc/tracker';
+import Popup from '../../misc/popup';
 import Hint from '../../misc/hint';
 import Request from '../../misc/request';
+import BaseGrid from '../baseGrid';
 import DataGrid from '../dataGrid';
 import TreeGrid from '../treeGrid';
 
@@ -20,7 +22,7 @@ export default class Manager {
      */
     static initialize() {
         // TODO: auto generated
-        let classes = [Hint, Request, DataGrid, TreeGrid];
+        let classes = [Popup, Hint, Request, BaseGrid, DataGrid, TreeGrid];
         let modules = [];
 
         // 获取所有依赖模块

@@ -53,11 +53,10 @@ export default class Request {
                     return;
                 }
 
-                this.success && this.success(result);
+                (success) ? success(result) : this.onSuccess();
             },
             error: (XMLHttpRequest) => {
-                this.onError(XMLHttpRequest.responseText);
-                error && error(XMLHttpRequest.responseText);
+                (error) ? error(XMLHttpRequest.responseText) : this.onError(XMLHttpRequest.responseText);
             },
             complete: () => {
                 layer.close(layerId);
@@ -78,6 +77,15 @@ export default class Request {
     }
 
     /**
+     * 成功处理函数
+     *
+     * @memberof Request
+     */
+    onSuccess() {
+        Hint.showErrorMsg('操作成功!');
+    }
+
+    /**
      * 错误处理函数
      * 
      * @param {string} result 结果
@@ -87,14 +95,14 @@ export default class Request {
         if (result && (result.length > 0)) {
             try {
                 let message = JSON.parse(result)['message'];
-                Hint.showErrorMsg('请求异常:' + message);
+                Hint.showErrorMsg('操作失败:' + message);
             }
             catch (e) {
-                Hint.showErrorMsg('请求异常!');
+                Hint.showErrorMsg('操作失败!');
             }
         }
         else {
-            Hint.showErrorMsg('请求异常!');
+            Hint.showErrorMsg('操作失败!');
         }
     }
 }

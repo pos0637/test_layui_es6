@@ -1,27 +1,18 @@
 
-import BaseComponent from '../base';
+import BaseGrid from '../baseGrid';
 import Request from '../../misc/request';
+import Popup from '../../misc/popup';
 
 /**
  * 树状表格
  * 
  * @export
  * @class TreeGrid
- * @extends {BaseComponent}
+ * @extends {BaseGrid}
  */
-export default class TreeGrid extends BaseComponent {
+export default class TreeGrid extends BaseGrid {
     constructor(props) {
         super(props);
-
-        /** 
-         * 请求地址
-         */
-        this.url = this.element.attr('url');
-
-        /** 
-         * 查询表单
-         */
-        this.queryForm = this.element.attr('query');
 
         /** 
          * 表格布局
@@ -57,9 +48,11 @@ export default class TreeGrid extends BaseComponent {
         ];
 
         let params = {};
-        if (this.queryForm)
-            $.extend(params, this._getFormData($(this.queryForm)), params);
+        // 获取查询数据
+        if (this.toolbar)
+            $.extend(params, this._getToolbarData(this.toolbar), params);
 
+        // 请求数据
         new Request(this.url, params).get((result) => {
             this.element.children('.Content').empty();
             layui.treeGird({
@@ -67,6 +60,7 @@ export default class TreeGrid extends BaseComponent {
                 nodes: result.data,
                 layout: this.layout
             });
+            this._bindEvent();
         }, () => {
             this.element.children('.Content').empty();
             layui.treeGird({
@@ -76,6 +70,7 @@ export default class TreeGrid extends BaseComponent {
             });
             // TODO: fix style
             this.element.after('无数据');
+            this._bindEvent();
         });
     }
 
@@ -128,35 +123,58 @@ export default class TreeGrid extends BaseComponent {
         return cols;
     }
 
-    /**
-     * 获取表单数据
-     * 
-     * @param {any} form 表单
-     * @returns 表单数据
-     * @memberof TreeGrid
-     */
-    _getFormData(form) {
-        let elements = form.find('input,select,textarea');
-        let data = {};
+    _onQueryButtonClick() {
+        this.render();
+    }
 
-        $.each(elements, function (i, element) {
-            if (!element.name)
-                return;
+    _onOpenButtonClick(sender) {
+        let url = sender.attr('url');
+        let title = sender.attr('topTitle');
+        let width = sender.attr('topWidth');
+        let height = sender.attr('topHeight');
+        let isMaximize = sender.attr('isMaximize') && (sender.attr('isMaximize') === 'true');
 
-            if (/^checkbox|radio$/.test(element.type) && !element.checked)
-                return;
+        Popup.show(title, width, height, url, isMaximize);
+    }
 
-            let value = element.value;
-            if (element.type === 'checkbox') {
-                if (data[element.name])
-                    value = data[element.name] + ',' + value;
-            }
+    _onCreateButtonClick(sender) {
+        let url = sender.attr('url');
+        let title = sender.attr('topTitle');
+        let width = sender.attr('topWidth');
+        let height = sender.attr('topHeight');
+        let isMaximize = sender.attr('isMaximize') && (sender.attr('isMaximize') === 'true');
 
-            if (value)
-                data[element.name] = value;
+        Popup.show(title, width, height, url, isMaximize, () => {
+            if (this.refreshable)
+                this.render();
         });
+    }
 
-        return data;
+    _onEditButtonClick(sender) {
+        let url = sender.attr('url');
+        let title = sender.attr('topTitle');
+        let width = sender.attr('topWidth');
+        let height = sender.attr('topHeight');
+        let isMaximize = sender.attr('isMaximize') && (sender.attr('isMaximize') === 'true');
+
+        Popup.show(title, width, height, url, isMaximize, () => {
+            if (this.refreshable)
+                this.render();
+        });
+    }
+
+    _onDeleteButtonClick(sender) {
+        let handler = () => {
+            new Request(sender.attr('url')).delete(() => {
+                if (this.refreshable)
+                    this.render();
+            });
+        };
+
+        if (sender.attr('isConfirm'))
+            Popup.confirm('询问', sender.attr('confirmMsg') && '是否确定操作选中的数据?', handler);
+        else
+            handler();
     }
 }
 
