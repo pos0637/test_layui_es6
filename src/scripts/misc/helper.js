@@ -39,6 +39,17 @@ $.assignAttr = function (map, element, ...attrs) {
 };
 
 /**
+ * 获取URL地址
+ * 
+ * @param {any} url 相对URL地址
+ * @returns URL地址
+ */
+$.url = function (url) {
+    let server = $.config.request.server;
+    return server.scheme + '://' + server.host + ':' + server.port + '/' + server.application + server.path + url;
+};
+
+/**
  * 获取属性
  * 
  * @param {any} attributeName 属性名称

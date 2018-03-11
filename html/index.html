@@ -47,19 +47,22 @@
             </div>
         </form>
     </div>
-    <div id="TreeTable1" class="TreeTable" url="api/v1/system/permissions" layout="#layout1" querybar="#querybar1">
-        <div id="layout1" class="layui-layout">
-            <p name="菜单名称" field="name" treeNodes="true" headerClass="value_col" />
-            <p name="路径" field="path" headerClass="value_col" colClass="value_col" style="width: 15%" />
-            <p name="操作" templet="#bar1" headerClass="value_col" colClass="value_col" style="width: 15%" />
-        </div>
-        <script type="text/html" id="bar1">
-            <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="open" url="ui/system/resources/edit.html?id={{d.id}}&readonly=true" topWidth="800px" topHeight="500px" topTitle="查看">查看</a>
-            <a class="layui-btn layui-btn-xs" lay-event="edit" url="ui/system/resources/edit.html?id={{d.id}}" topWidth="800px" topHeight="500px" topTitle="编辑">编辑</a>
-            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete" url="api/v1/system/resource/{{d.id}}" isConfirm="1" confirmMsg="是否确定删除当前记录？">删除</a>
-        </script>
-        <div class="layui-content"></div>
+    <table id="DataGrid1" class="DataGrid" url="api/v1/system/resources" layout="#layout1" querybar="#querybar1"></table>
+    <div id="layout1" class="layui-layout">
+        <p type="numbers" title="#" />
+        <p checkbox="true" />
+        <p field="name" title="名称" align="center" width="150" sort="true" />
+        <p field="type" title="类型" align="center" width="150" dict="type" />
+        <p field="path" title="资源路径" align="center" width="30%" sort="true" />
+        <p field="state" title="状态" align="center" width="100" templet="#stateTpl" />
+        <p field="remark" title="备注" align="center" width="100" />
+        <p fixed="right" align="center" toolbar="#bar" title="操作" width="220" />
     </div>
+    <script type="text/html" id="bar1">
+        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="open" url="ui/system/resources/edit.html?id={{d.id}}&readonly=true" topWidth="800px" topHeight="500px" topTitle="查看">查看</a>
+        <a class="layui-btn layui-btn-xs" lay-event="edit" url="ui/system/resources/edit.html?id={{d.id}}" topWidth="800px" topHeight="500px" topTitle="编辑">编辑</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete" url="api/v1/system/resource/{{d.id}}" isConfirm="1" confirmMsg="是否确定删除当前记录？">删除</a>
+    </script>
 </body>
 
 </html>

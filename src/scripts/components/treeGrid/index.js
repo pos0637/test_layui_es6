@@ -44,16 +44,15 @@ export default class TreeGrid extends BaseGrid {
             $.extend(params, this._getQuerybarData(this.querybar), params);
 
         // 空数据处理函数
-        let handler = () => {
-            this.element.children('.layui-content').empty();
+        let handler = (content) => {
+            this.element.empty();
             layui.treeGird({
-                elem: this.element.children('.layui-content'),
+                elem: this.element,
                 spreadable: true,
                 nodes: data,
                 layout: this.layout
             });
-            // TODO: fix style
-            this.element.children('.layui-content').append('无数据');
+            this.element.append(content);
             layui.form.render();
             this._bindEvent();
         };
@@ -61,19 +60,21 @@ export default class TreeGrid extends BaseGrid {
         // 请求数据
         if (this.autoload) {
             new Request(this.url, params).get((result) => {
-                this.element.children('.layui-content').empty();
+                this.element.empty();
                 layui.treeGird({
-                    elem: this.element.children('.layui-content'),
+                    elem: this.element,
                     spreadable: true,
                     nodes: result.data,
                     layout: this.layout
                 });
                 layui.form.render();
                 this._bindEvent();
-            }, handler);
+            }, () => {
+                handler('<div class="layui-none">数据接口请求异常</div>');
+            });
         }
         else {
-            handler();
+            handler('<div class="layui-none">无数据</div>');
         }
     }
 
@@ -85,10 +86,10 @@ export default class TreeGrid extends BaseGrid {
         let cols = [];
 
         $.each(layout.children(), function () {
-            let node = $(this);
+            let element = $(this);
             let col = {};
 
-            $.assignAttr(col, node, 'name', 'field', 'treeNodes', 'style', 'headerClass', 'colClass', 'templet');
+            $.assignAttr(col, element, 'name', 'field', 'treeNodes', 'style', 'headerClass', 'colClass', 'templet');
 
             col['render'] = function (row) {
                 let templet = col['templet'];

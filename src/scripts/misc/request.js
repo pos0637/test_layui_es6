@@ -9,7 +9,7 @@ import Hint from './hint';
  */
 export default class Request {
     constructor(url, params) {
-        this.url = url;
+        this.url = $.url(url);
         this.params = params;
     }
 

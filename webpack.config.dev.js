@@ -28,6 +28,12 @@ module.exports = {
             inject: true,
             chunks: ['main']
         }),
+        new htmlWebpackPlugin({
+            filename: 'test_treegrid.html',
+            template: path.resolve(__dirname, 'html/test_treegrid.html'),
+            inject: true,
+            chunks: ['main']
+        }),
         new copyWebpackPlugin([{
             from: path.resolve(__dirname, 'html/vendors'),
             to: path.resolve(__dirname, 'dist/vendors'),

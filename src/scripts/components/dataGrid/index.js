@@ -26,22 +26,31 @@ export default class DataGrid extends BaseGrid {
 
         let height = this.element.getAttr('height', 'full-135');
         let paging = this.element.getAttr('paging', 'true');
-        let pageSize = this.element.getAttr('pageSize', '20');
+        let pageSize = this.element.getAttr('pageSize', $.config.paging.pageSize);
 
         this.datagrid = layui.table.render({
             id: this.id,
             elem: this.element,
-            url: this.url,
+            url: $.url(this.url),
             where: params,
             page: paging === 'true',
             method: 'get',
             height: height,
-            limits: [10, 20, 30, 50, 100],
+            limits: $.config.paging.limits,
             limit: pageSize,
             cols: this.layout,
             data: [],
-            request: { pageName: 'pageNum', limitName: 'pageSize' },
-            response: { statusName: 'code', statusCode: 200, msgName: 'message', countName: 'data.total', dataName: 'data.list' }
+            request: {
+                pageName: $.config.paging.request.pageName,
+                limitName: $.config.paging.request.pageSize
+            },
+            response: {
+                statusName: $.config.paging.request.statusName,
+                statusCode: $.config.paging.request.successCode,
+                msgName: $.config.paging.request.msgName,
+                countName: $.config.paging.request.countName,
+                dataName: $.config.paging.request.dataName
+            }
         });
     }
 
@@ -54,22 +63,22 @@ export default class DataGrid extends BaseGrid {
         let cols = [];
 
         $.each(layout.children(), function () {
-            let node = $(this);
+            let element = $(this);
             let col = {};
 
             // 处理换行
-            let type = node.attr('type');
+            let type = element.attr('type');
             if (type === 'br') {
                 rows.push(cols);
                 cols = [];
                 return;
             }
 
-            $.assignAttr(col, node, 'align', 'fixed', 'style', 'colspan', 'rowspan');
-            if (!$.isEmpty(node.attr('toolbar'))) // 非工具栏列
-                $.assignAttr(col, node, 'type', 'field', 'title', 'width', 'sort', 'templet', 'checkbox', 'edit', 'event', 'LAY_CHECKED');
+            $.assignAttr(col, element, 'align', 'fixed', 'style', 'colspan', 'rowspan');
+            if (!$.isEmpty(element.attr('toolbar'))) // 非工具栏列
+                $.assignAttr(col, element, 'type', 'field', 'title', 'width', 'sort', 'templet', 'checkbox', 'edit', 'event', 'LAY_CHECKED');
             else // 工具栏列
-                $.assignAttr(col, node, 'width', 'title');
+                $.assignAttr(col, element, 'width', 'title');
 
             cols.push(col);
         });
@@ -79,3 +88,13 @@ export default class DataGrid extends BaseGrid {
         return rows;
     }
 }
+
+/**
+ * DOM节点属性
+ */
+DataGrid.filter = 'table.DataGrid';
+
+/**
+ * 依赖模块
+ */
+DataGrid.imports = ['table', 'form', 'laytpl'];
