@@ -6,7 +6,7 @@ $.config = {
     request: {
         server: {
             scheme: 'http',
-            host: 'locahost',
+            host: 'localhost',
             port: '8080',
             application: '',
             path: ''
@@ -29,8 +29,8 @@ $.config = {
             statusName: 'code',
             successCode: 200,
             msgName: 'message',
-            countName: 'data.total',
-            dataName: 'data.list'
+            countName: 'total',
+            dataName: 'data'
         }
     }
 };

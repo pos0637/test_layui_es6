@@ -53,5 +53,9 @@
         "no-undef": "warn",
         "no-console": "warn",
         "no-unused-vars": "warn"
+    },
+    "globals": {
+        "$": true,
+        "layui": true
     }
 }
