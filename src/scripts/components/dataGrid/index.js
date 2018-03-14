@@ -1,5 +1,6 @@
 
 import BaseGrid from '../baseGrid';
+import Popup from '../../misc/popup';
 
 /**
  * 数据表格
@@ -90,6 +91,20 @@ export default class DataGrid extends BaseGrid {
         layui.table.on('sort(' + this.id + ')', (obj) => {
             layui.table.reload(this.id, { initSort: obj, where: { sortField: obj.field, sortType: obj.type } });
         });
+
+        // 绑定表格内部按钮事件
+        let _this = this;
+        layui.table.on('tool(' + this.id + ')', function (obj) {
+            let method = obj.event;
+            if (method === 'open')
+                _this._onOpenButtonClick($(this));
+            else if (method === 'create')
+                _this._onCreateButtonClick($(this));
+            else if (method === 'edit')
+                _this._onEditButtonClick($(this));
+            else if (method === 'delete')
+                _this._onDeleteButtonClick($(this));
+        });
     }
 
     _getLayout() {
@@ -116,7 +131,7 @@ export default class DataGrid extends BaseGrid {
             if ($.isEmpty(element.attr('toolbar'))) // 非工具栏列
                 $.assignAttr(col, element, 'type', 'field', 'title', 'width', 'sort', 'templet', 'checkbox', 'edit', 'event', 'LAY_CHECKED');
             else // 工具栏列
-                $.assignAttr(col, element, 'width', 'title');
+                $.assignAttr(col, element, 'toolbar', 'width', 'title');
 
             cols.push(col);
         });
@@ -129,6 +144,51 @@ export default class DataGrid extends BaseGrid {
     _onQueryButtonClick() {
         if (this.refreshable)
             this.render();
+    }
+
+    _onOpenButtonClick(sender) {
+        let params = $.assignAttr({}, sender, 'url', 'topTitle', 'topWidth', 'topHeight', 'isMaximize');
+        params.isMaximize = $.isEmpty(params.isMaximize) ? false : params.isMaximize === 'true';
+
+        Popup.show(params.title, params.width, params.height, params.url, params.isMaximize);
+    }
+
+    _onCreateButtonClick(sender) {
+        let params = $.assignAttr({}, sender, 'url', 'topTitle', 'topWidth', 'topHeight', 'isMaximize');
+        params.isMaximize = $.isEmpty(params.isMaximize) ? false : params.isMaximize === 'true';
+
+        Popup.show(params.title, params.width, params.height, params.url, params.isMaximize, () => {
+            if (this.refreshable)
+                this.render();
+        });
+    }
+
+    _onEditButtonClick(sender) {
+        let params = $.assignAttr({}, sender, 'url', 'topTitle', 'topWidth', 'topHeight', 'isMaximize');
+        params.isMaximize = $.isEmpty(params.isMaximize) ? false : params.isMaximize === 'true';
+
+        Popup.show(params.title, params.width, params.height, params.url, params.isMaximize, () => {
+            if (this.refreshable)
+                this.render();
+        });
+    }
+
+    _onDeleteButtonClick(sender) {
+        let handler = () => {
+            new Request(sender.attr('url')).delete(() => {
+                if (this.refreshable)
+                    this.render();
+            });
+        };
+
+        if (!$.isEmpty(sender.attr('isConfirm')))
+            Popup.confirm('询问', sender.attr('confirmMsg') && '是否确定操作选中的数据?', handler);
+        else
+            handler();
+    }
+
+    _onDeleteSelectedButtonClick(sender) {
+        console.log('_onDeleteSelectedButtonClick');
     }
 }
 
