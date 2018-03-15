@@ -55,8 +55,7 @@
                     <input type="text" id="iconPath" name="iconPath" autocomplete="off" disabled="disabled" class="layui-input" />
                 </div>
                 <div class="layui-input-inline">
-                    <button type="button" class="layui-btn" function="upload" fileElem="#iconPath" fileAccept="file" fileExts="" fileSize="1024"
-                        inputs="type:test">上传图片</button>
+                    <button type="button" class="layui-btn" lay-event="upload" path="#iconPath" accept="file" exts="" size="1024" inputs="type:test">上传图片</button>
                 </div>
             </div>
             <div class="layui-form-item layui-form-text">
@@ -67,7 +66,7 @@
             </div>
             <hr/>
             <div class="layui-form-item" style="text-align: center;">
-                <button lay-filter="edit1" class="layui-btn" lay-submit lay-event="edit" url="api/v1/system/resources">
+                <button type="button" lay-filter="edit1" class="layui-btn" lay-submit lay-event="edit" url="api/v1/system/resources">
                     <i class="layui-icon">&#xe642;</i>编辑</button>
                 <button type="button" class="layui-btn layui-btn-primary" lay-event="close">关闭</button>
             </div>

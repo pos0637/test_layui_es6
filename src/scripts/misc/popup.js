@@ -44,7 +44,7 @@ export default class Popup {
         });
 
         if (isMaximize)
-            layer.full(layerId);
+            layui.layer.full(layerId);
 
         return layerId;
     }

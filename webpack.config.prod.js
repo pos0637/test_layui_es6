@@ -40,6 +40,12 @@ module.exports = {
             chunks: ['main']
         }),
         new htmlWebpackPlugin({
+            filename: 'upload.html',
+            template: path.resolve(__dirname, 'html/upload.html'),
+            inject: true,
+            chunks: ['main']
+        }),
+        new htmlWebpackPlugin({
             filename: 'test_treegrid.html',
             template: path.resolve(__dirname, 'html/test_treegrid.html'),
             inject: true,

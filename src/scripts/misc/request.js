@@ -73,7 +73,7 @@ export default class Request {
      * @memberof Request
      */
     checkResult(result) {
-        return (result && (result.code = 200));
+        return (result && (result[$.config.request.response.statusName] === $.config.request.response.successCode));
     }
 
     /**
@@ -94,7 +94,7 @@ export default class Request {
     onError(result) {
         if (result && (result.length > 0)) {
             try {
-                let message = JSON.parse(result)['message'];
+                let message = JSON.parse(result)[$.config.request.response.msgName];
                 Hint.showErrorMsg('操作失败:' + message);
             }
             catch (e) {

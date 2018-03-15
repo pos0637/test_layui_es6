@@ -15,7 +15,7 @@ $.config = {
             statusName: 'code',
             successCode: 200,
             msgName: 'message',
-            countName: 'data'
+            dataName: 'data'
         }
     },
     paging: {
@@ -34,6 +34,8 @@ $.config = {
         }
     },
     upload: {
-        url: 'file/upload'
+        url: 'file/upload',
+        result: 'uploadFilePath',
+        dataName: 'data'
     }
 };

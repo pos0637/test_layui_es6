@@ -64,7 +64,7 @@ export default class TreeGrid extends BaseGrid {
                 layui.treeGird({
                     elem: this.element,
                     spreadable: true,
-                    nodes: result.data,
+                    nodes: result[$.config.request.response.dataName],
                     layout: this.layout
                 });
                 layui.form.render();
@@ -114,14 +114,14 @@ export default class TreeGrid extends BaseGrid {
         let params = $.assignAttr({}, sender, 'url', 'topTitle', 'topWidth', 'topHeight', 'isMaximize');
         params.isMaximize = $.isEmpty(params.isMaximize) ? false : params.isMaximize === 'true';
 
-        Popup.show(params.title, params.width, params.height, params.url, params.isMaximize);
+        Popup.show(params.topTitle, params.topWidth, params.topHeight, params.url, params.isMaximize);
     }
 
     _onCreateButtonClick(sender) {
         let params = $.assignAttr({}, sender, 'url', 'topTitle', 'topWidth', 'topHeight', 'isMaximize');
         params.isMaximize = $.isEmpty(params.isMaximize) ? false : params.isMaximize === 'true';
 
-        Popup.show(params.title, params.width, params.height, params.url, params.isMaximize, () => {
+        Popup.show(params.topTitle, params.topWidth, params.topHeight, params.url, params.isMaximize, () => {
             if (this.refreshable)
                 this.render();
         });
@@ -131,7 +131,7 @@ export default class TreeGrid extends BaseGrid {
         let params = $.assignAttr({}, sender, 'url', 'topTitle', 'topWidth', 'topHeight', 'isMaximize');
         params.isMaximize = $.isEmpty(params.isMaximize) ? false : params.isMaximize === 'true';
 
-        Popup.show(params.title, params.width, params.height, params.url, params.isMaximize, () => {
+        Popup.show(params.topTitle, params.topWidth, params.topHeight, params.url, params.isMaximize, () => {
             if (this.refreshable)
                 this.render();
         });

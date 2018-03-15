@@ -62,8 +62,8 @@
         <input type="checkbox" name="state" lay-skin="switch" disabled lay-text="开启|关闭" {{ d.state == 0 ? 'checked' : '' }}>
     </script>
     <script type="text/html" id="bar1">
-        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="open" url="edit.html?id={{d.id}}&readonly=true" topWidth="800px" topHeight="600px" topTitle="查看">查看</a>
-        <a class="layui-btn layui-btn-xs" lay-event="edit" url="edit.html?id={{d.id}}" topWidth="800px" topHeight="600px" topTitle="编辑">编辑</a>
+        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="open" url="edit.html?id={{d.id}}&readonly=true" topWidth="800px" topHeight="500px" topTitle="查看">查看</a>
+        <a class="layui-btn layui-btn-xs" lay-event="edit" url="edit.html?id={{d.id}}" topWidth="800px" topHeight="500px" topTitle="编辑">编辑</a>
         <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete" url="api/v1/system/resource/{{d.id}}" isConfirm="true" confirmMsg="是否确定删除当前记录？">删除</a>
     </script>
 </body>

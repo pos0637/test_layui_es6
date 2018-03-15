@@ -77,6 +77,35 @@ $.getUrlParams = function () {
 };
 
 /**
+ * 获取结果
+ * 
+ * @param {any} key 属性名称
+ * @returns 值
+ */
+$.getResult = function (key) {
+    let element = top.$('meta[name="' + key + '"]');
+    return (element.length === 0) ? undefined : element.attr('content');
+};
+
+/**
+ * 设置结果
+ * 
+ * @param {any} key 属性名称
+ * @param {any} value 值
+ */
+$.setResult = function (key, value) {
+    let element = top.$('meta[name="' + key + '"]');
+    (element.length === 0) ? top.$('head').append('<meta name="' + key + '" content="' + value + '" />') : element.attr('content', value);
+};
+
+/**
+ * 关闭当前窗口
+ */
+$.closeWindow = function () {
+    parent.layer.close(parent.layer.getFrameIndex(window.name));
+};
+
+/**
  * 获取属性
  * 
  * @param {any} attributeName 属性名称

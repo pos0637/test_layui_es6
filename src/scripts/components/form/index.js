@@ -1,6 +1,7 @@
 
 import BaseComponent from '../base';
 import Hint from '../../misc/hint';
+import Popup from '../../misc/popup';
 import Request from '../../misc/request';
 
 /**
@@ -83,7 +84,7 @@ export default class Form extends BaseComponent {
         }
 
         // 合并参数
-        let params = result.data;
+        let params = result[$.config.request.response.dataName];
         $.extend(params, $.urlParams, params);
 
         // 填充表单
@@ -148,6 +149,8 @@ export default class Form extends BaseComponent {
             botton.on('click', function () {
                 if (method === 'close')
                     _this._onCloseButtonClick(botton);
+                else if (method === 'upload')
+                    _this._onUploadButtonClick(botton);
             });
 
             !$.isEmpty(filter) && layui.form.on('submit(' + filter + ')', function (data) {
@@ -171,7 +174,7 @@ export default class Form extends BaseComponent {
         let event = sender.attr('lay-event');
         let handler = () => {
             Hint.showSuccessMsg('操作成功!');
-            this.autoclose && parent.layer.close(parent.layer.getFrameIndex(window.name));
+            this.autoclose && $.closeWindow();
         };
 
         if (event === 'add')
@@ -187,7 +190,21 @@ export default class Form extends BaseComponent {
      * @memberof Form
      */
     _onCloseButtonClick(sender) {
-        parent.layer.close(parent.layer.getFrameIndex(window.name));
+        $.closeWindow();
+    }
+
+    /**
+     * 上传按钮点击事件
+     * 
+     * @param {any} sender 组件
+     * @memberof Form
+     */
+    _onUploadButtonClick(sender) {
+        let params = $.assignAttr({}, sender, 'path', 'accept', 'exts', 'size');
+        Popup.show('上传附件', '400px', '280px', 'upload.html?params=' + escape(JSON.stringify(params)), false, () => {
+            let path = $.getResult($.config.upload.result);
+            $.isNotBlank(path) && !$.isEmpty(params.path) && $(params.path).val(path);
+        });
     }
 }
 

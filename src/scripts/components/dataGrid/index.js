@@ -150,14 +150,14 @@ export default class DataGrid extends BaseGrid {
         let params = $.assignAttr({}, sender, 'url', 'topTitle', 'topWidth', 'topHeight', 'isMaximize');
         params.isMaximize = $.isEmpty(params.isMaximize) ? false : params.isMaximize === 'true';
 
-        Popup.show(params.title, params.width, params.height, params.url, params.isMaximize);
+        Popup.show(params.topTitle, params.topWidth, params.topHeight, params.url, params.isMaximize);
     }
 
     _onCreateButtonClick(sender) {
         let params = $.assignAttr({}, sender, 'url', 'topTitle', 'topWidth', 'topHeight', 'isMaximize');
         params.isMaximize = $.isEmpty(params.isMaximize) ? false : params.isMaximize === 'true';
 
-        Popup.show(params.title, params.width, params.height, params.url, params.isMaximize, () => {
+        Popup.show(params.topTitle, params.topWidth, params.topHeight, params.url, params.isMaximize, () => {
             if (this.refreshable)
                 this.render();
         });
@@ -167,7 +167,7 @@ export default class DataGrid extends BaseGrid {
         let params = $.assignAttr({}, sender, 'url', 'topTitle', 'topWidth', 'topHeight', 'isMaximize');
         params.isMaximize = $.isEmpty(params.isMaximize) ? false : params.isMaximize === 'true';
 
-        Popup.show(params.title, params.width, params.height, params.url, params.isMaximize, () => {
+        Popup.show(params.topTitle, params.topWidth, params.topHeight, params.url, params.isMaximize, () => {
             if (this.refreshable)
                 this.render();
         });
