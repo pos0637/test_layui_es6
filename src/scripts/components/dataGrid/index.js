@@ -24,7 +24,7 @@ export default class DataGrid extends BaseGrid {
     }
 
     render() {
-        let params = $.urlParams;
+        let params = {};
         // 获取查询数据
         if (!$.isEmpty(this.querybar))
             $.extend(params, this._getQuerybarData(this.querybar), params);
@@ -159,7 +159,7 @@ export default class DataGrid extends BaseGrid {
 
         Popup.show(params.topTitle, params.topWidth, params.topHeight, params.url, params.isMaximize, () => {
             if (this.refreshable)
-                this.render();
+                this.datagrid.refresh();
         });
     }
 
@@ -169,7 +169,7 @@ export default class DataGrid extends BaseGrid {
 
         Popup.show(params.topTitle, params.topWidth, params.topHeight, params.url, params.isMaximize, () => {
             if (this.refreshable)
-                this.render();
+                this.datagrid.refresh();
         });
     }
 
@@ -180,7 +180,7 @@ export default class DataGrid extends BaseGrid {
                     this.render();
             });
         };
-        
+
         if (sender.getAttr('isConfirm', 'false') === 'true')
             Popup.confirm('询问', sender.attr('confirmMsg') && '是否确定操作选中的数据?', handler);
         else
