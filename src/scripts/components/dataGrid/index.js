@@ -24,7 +24,7 @@ export default class DataGrid extends BaseGrid {
     }
 
     render() {
-        let params = {};
+        let params = $.urlParams;
         // 获取查询数据
         if (!$.isEmpty(this.querybar))
             $.extend(params, this._getQuerybarData(this.querybar), params);
@@ -85,7 +85,7 @@ export default class DataGrid extends BaseGrid {
         }
 
         // 绑定事件
-        this._bindEvent();
+        this._bindEvents();
 
         // 绑定排序事件
         layui.table.on('sort(' + this.id + ')', (obj) => {
@@ -180,8 +180,8 @@ export default class DataGrid extends BaseGrid {
                     this.render();
             });
         };
-
-        if (!$.isEmpty(sender.attr('isConfirm')))
+        
+        if (sender.getAttr('isConfirm', 'false') === 'true')
             Popup.confirm('询问', sender.attr('confirmMsg') && '是否确定操作选中的数据?', handler);
         else
             handler();

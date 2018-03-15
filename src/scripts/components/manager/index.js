@@ -49,10 +49,8 @@ export default class Manager {
                 // 创建组件
                 let elements = $(filter);
                 $(elements).each((index, element) => {
-                    let component = new clazz({
-                        id: element.id,
-                        element: $('#' + element.id)
-                    });
+                    let id = element.getAttribute('id');
+                    let component = new clazz({ id: id, element: $('#' + id) });
                     Manager.components[element.id] = component;
                     components.push(component);
                 });

@@ -21,8 +21,8 @@ export default class Request {
         return this.do('post', success, error, complete);
     }
 
-    push(success, error, complete) {
-        return this.do('push', success, error, complete);
+    put(success, error, complete) {
+        return this.do('put', success, error, complete);
     }
 
     delete(success, error, complete) {
@@ -39,7 +39,7 @@ export default class Request {
      * @memberof Request
      */
     do(method, success, error, complete) {
-        let layerId = layer.load();
+        let layerId = layui.layer.load();
 
         $.ajax({
             url: this.url,
@@ -59,7 +59,7 @@ export default class Request {
                 (error) ? error(XMLHttpRequest.responseText) : this.onError(XMLHttpRequest.responseText);
             },
             complete: () => {
-                layer.close(layerId);
+                layui.layer.close(layerId);
                 complete && complete();
             }
         });
@@ -82,7 +82,7 @@ export default class Request {
      * @memberof Request
      */
     onSuccess() {
-        Hint.showErrorMsg('操作成功!');
+        Hint.showSuccessMsg('操作成功!');
     }
 
     /**

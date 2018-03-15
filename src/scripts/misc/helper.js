@@ -54,7 +54,7 @@ $.url = function (url) {
  *
  * @returns URL请求参数
  */
-$.getUrlParam = function () {
+$.getUrlParams = function () {
     let param = window.location.search;
     let pattern = /([^?&=]+)=([^&#]*)/g;
     let dict = {};
@@ -86,3 +86,31 @@ $.getUrlParam = function () {
 $.fn.getAttr = function (attributeName, defaultValue) {
     return $.isEmpty(this.attr(attributeName)) ? defaultValue : this.attr(attributeName);
 };
+
+/**
+ * 填充子元素
+ * 
+ * @param {any} data 数据
+ */
+$.fn.fill = function (data) {
+    let _this = this;
+    this.each(function () {
+        $.each(data, function (key, value) {
+            let elements = _this.find('[name="' + key + '"]');
+            if (elements.length === 1) {
+                elements.val(elements.attr('type') === 'checkbox' ? [value] : value);
+            }
+            else {
+                if (elements.attr('type') === 'checkbox')
+                    !$.isEmpty(value) && elements.val(value.split(','));
+                else
+                    elements.val([value]);
+            }
+        });
+    });
+};
+
+/**
+ * URL请求参数
+ */
+$.urlParams = $.getUrlParams();

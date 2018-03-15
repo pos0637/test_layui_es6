@@ -38,7 +38,7 @@ export default class TreeGrid extends BaseGrid {
             },
         ];
 
-        let params = {};
+        let params = $.urlParams;
         // 获取查询数据
         if (!$.isEmpty(this.querybar))
             $.extend(params, this._getQuerybarData(this.querybar), params);
@@ -54,7 +54,7 @@ export default class TreeGrid extends BaseGrid {
             });
             this.element.append(content);
             layui.form.render();
-            this._bindEvent();
+            this._bindEvents();
         };
 
         // 请求数据
@@ -68,7 +68,7 @@ export default class TreeGrid extends BaseGrid {
                     layout: this.layout
                 });
                 layui.form.render();
-                this._bindEvent();
+                this._bindEvents();
             }, () => {
                 handler('<div class="layui-none">数据接口请求异常</div>');
             });
@@ -145,7 +145,7 @@ export default class TreeGrid extends BaseGrid {
             });
         };
 
-        if (!$.isEmpty(sender.attr('isConfirm')))
+        if (sender.getAttr('isConfirm', 'false') === 'true')
             Popup.confirm('询问', sender.attr('confirmMsg') && '是否确定操作选中的数据?', handler);
         else
             handler();

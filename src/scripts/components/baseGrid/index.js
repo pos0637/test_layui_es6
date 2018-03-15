@@ -84,7 +84,7 @@ export default class BaseGrid extends BaseComponent {
      * 
      * @memberof BaseGrid
      */
-    _bindEvent() {
+    _bindEvents() {
         this._bindQuerybarButtonEvent();
         this._bindGridButtonEvent();
     }
@@ -137,13 +137,13 @@ export default class BaseGrid extends BaseComponent {
             botton.off('click');
             botton.on('click', function () {
                 if (method === 'open')
-                    _this._onOpenButtonClick($(this));
+                    _this._onOpenButtonClick(botton);
                 else if (method === 'create')
-                    _this._onCreateButtonClick($(this));
+                    _this._onCreateButtonClick(botton);
                 else if (method === 'edit')
-                    _this._onEditButtonClick($(this));
+                    _this._onEditButtonClick(botton);
                 else if (method === 'delete')
-                    _this._onDeleteButtonClick($(this));
+                    _this._onDeleteButtonClick(botton);
             });
         });
     }

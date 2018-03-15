@@ -32,5 +32,8 @@ $.config = {
             countName: 'total',
             dataName: 'data'
         }
+    },
+    upload: {
+        url: 'file/upload'
     }
 };
