@@ -40,7 +40,7 @@ export default class Form extends BaseComponent {
         /**
          * 编辑器
          */
-        this.editors = [];
+        this.editors = {};
     }
 
     render() {

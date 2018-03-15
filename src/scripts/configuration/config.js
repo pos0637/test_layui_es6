@@ -22,7 +22,7 @@ $.config = {
         pageSize: 20,
         limits: [10, 20, 30, 50, 100],
         request: {
-            pageName: 'pageName',
+            pageName: 'pageNum',
             pageSize: 'pageSize'
         },
         response: {

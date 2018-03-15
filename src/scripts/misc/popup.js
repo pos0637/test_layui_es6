@@ -66,7 +66,10 @@ export default class Popup {
             btnAlign: 'c', // 按钮居中对齐
             anim: 1, // 从上掉落
             icon: 3
-        }, onConfirm);
+        }, (layerId) => {
+            top.layer.close(layerId);
+            onConfirm && onConfirm();
+        });
     }
 }
 

@@ -1,5 +1,7 @@
 
 import BaseGrid from '../baseGrid';
+import Hint from '../../misc/hint';
+import Request from '../../misc/request';
 import Popup from '../../misc/popup';
 
 /**
@@ -176,6 +178,7 @@ export default class DataGrid extends BaseGrid {
     _onDeleteButtonClick(sender) {
         let handler = () => {
             new Request(sender.attr('url')).delete(() => {
+                Hint.showSuccessMsg('操作成功!');
                 if (this.refreshable)
                     this.render();
             });

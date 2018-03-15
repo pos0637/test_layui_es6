@@ -92,17 +92,18 @@ export default class Request {
      * @memberof Request
      */
     onError(result) {
+        let handler = () => { Hint.showErrorMsg('操作失败!'); };
         if (result && (result.length > 0)) {
             try {
                 let message = JSON.parse(result)[$.config.request.response.msgName];
-                Hint.showErrorMsg('操作失败:' + message);
+                $.isEmpty(message) ? handler() : Hint.showErrorMsg('操作失败:' + message);
             }
             catch (e) {
-                Hint.showErrorMsg('操作失败!');
+                handler();
             }
         }
         else {
-            Hint.showErrorMsg('操作失败!');
+            handler();
         }
     }
 }

@@ -23,6 +23,11 @@ export default class BaseGrid extends BaseComponent {
         this.querybar = $(this.element.attr('querybar'));
 
         /** 
+         * 操作栏
+         */
+        this.actionbar = $(this.element.attr('actionbar'));
+
+        /** 
          * 是否自动加载
          */
         this.autoload = this.element.getAttr('autoload', 'true') === 'true';
@@ -86,6 +91,7 @@ export default class BaseGrid extends BaseComponent {
      */
     _bindEvents() {
         this._bindQuerybarButtonEvent();
+        this._bindActionBarButtonEvent();
         this._bindGridButtonEvent();
     }
 
@@ -100,6 +106,37 @@ export default class BaseGrid extends BaseComponent {
 
         let _this = this;
         let elements = this.querybar.find('.layui-btn');
+        $.each(elements, function () {
+            let botton = $(this);
+            let method = botton.attr('lay-event');
+            if ($.isEmpty(method))
+                return;
+
+            botton.off('click');
+            botton.on('click', function () {
+                if (method === 'query')
+                    _this._onQueryButtonClick($(this));
+                else if (method === 'create')
+                    _this._onCreateButtonClick($(this));
+                else if (method === 'edit')
+                    _this._onEditButtonClick($(this));
+                else if (method === 'delete')
+                    _this._onDeleteSelectedButtonClick($(this));
+            });
+        });
+    }
+
+    /**
+     * 绑定操作栏按钮事件
+     *
+     * @memberof BaseGrid
+     */
+    _bindActionBarButtonEvent() {
+        if ($.isEmpty(this.actionbar))
+            return;
+
+        let _this = this;
+        let elements = this.actionbar.find('.layui-btn');
         $.each(elements, function () {
             let botton = $(this);
             let method = botton.attr('lay-event');

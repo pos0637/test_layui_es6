@@ -122,6 +122,9 @@ $.fn.getAttr = function (attributeName, defaultValue) {
  * @param {any} data 数据
  */
 $.fn.fill = function (data) {
+    if ($.isEmpty(data))
+        return;
+
     let _this = this;
     this.each(function () {
         $.each(data, function (key, value) {

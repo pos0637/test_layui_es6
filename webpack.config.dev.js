@@ -29,6 +29,12 @@ module.exports = {
             chunks: ['main']
         }),
         new htmlWebpackPlugin({
+            filename: 'add.html',
+            template: path.resolve(__dirname, 'html/add.html'),
+            inject: true,
+            chunks: ['main']
+        }),
+        new htmlWebpackPlugin({
             filename: 'edit.html',
             template: path.resolve(__dirname, 'html/edit.html'),
             inject: true,
