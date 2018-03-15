@@ -26,10 +26,9 @@ export default class DataGrid extends BaseGrid {
     }
 
     render() {
-        let params = {};
         // 获取查询数据
-        if (!$.isEmpty(this.querybar))
-            $.extend(params, this._getQuerybarData(this.querybar), params);
+        let params = {};
+        (!$.isEmpty(this.querybar)) && $.extend(params, this._getQuerybarData(this.querybar), params);
 
         let height = this.element.getAttr('height', 'full-135');
         let paging = this.element.getAttr('paging', 'true');
@@ -109,6 +108,16 @@ export default class DataGrid extends BaseGrid {
         });
     }
 
+    /**
+     * 获取选中行数据
+     * 
+     * @returns 选中行数据
+     * @memberof DataGrid
+     */
+    getChecked() {
+        return layui.table.checkStatus(this.id);
+    }
+
     _getLayout() {
         let layout = $(this.element.attr('layout'));
         if (!layout)
@@ -144,8 +153,13 @@ export default class DataGrid extends BaseGrid {
     }
 
     _onQueryButtonClick() {
-        if (this.refreshable)
-            this.render();
+        if (this.refreshable) {
+            // 获取查询数据
+            let params = {};
+            (!$.isEmpty(this.querybar)) && $.extend(params, this._getQuerybarData(this.querybar), params);
+
+            this.datagrid.reload({ where: params });
+        }
     }
 
     _onOpenButtonClick(sender) {
@@ -180,7 +194,7 @@ export default class DataGrid extends BaseGrid {
             new Request(sender.attr('url')).delete(() => {
                 Hint.showSuccessMsg('操作成功!');
                 if (this.refreshable)
-                    this.render();
+                    this.datagrid.reload();
             });
         };
 

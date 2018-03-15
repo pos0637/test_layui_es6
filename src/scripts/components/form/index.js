@@ -15,24 +15,24 @@ export default class Form extends BaseComponent {
     constructor(props) {
         super(props);
 
-        /** 
+        /**
          * 请求地址
          */
         this.url = this.element.attr('url');
         if (!$.isEmpty(this.url))
             this.url = layui.laytpl(this.url).render($.urlParams);
 
-        /** 
+        /**
          * 是否自动加载
          */
         this.autoload = this.element.getAttr('autoload', 'false') === 'true';
 
-        /** 
+        /**
          * 是否自动关闭
          */
         this.autoclose = this.element.getAttr('autoclose', 'true') === 'true';
 
-        /** 
+        /**
          * 是否只读
          */
         this.readonly = (!$.isEmpty($.urlParams['readonly'])) && ($.urlParams['readonly'] === 'true');

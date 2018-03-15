@@ -39,10 +39,9 @@ export default class TreeGrid extends BaseGrid {
             },
         ];
 
-        let params = {};
         // 获取查询数据
-        if (!$.isEmpty(this.querybar))
-            $.extend(params, this._getQuerybarData(this.querybar), params);
+        let params = {};
+        (!$.isEmpty(this.querybar)) && $.extend(params, this._getQuerybarData(this.querybar), params);
 
         // 空数据处理函数
         let handler = (content) => {
