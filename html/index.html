@@ -21,64 +21,85 @@
 </head>
 
 <body>
-    <h1>你好，世界！</h1>
-    <div class="layui-form-query">
-        <form class="layui-form" id="querybar1">
-            <div class="layui-form-item">
-                <div class="layui-inline">
-                    <label class="layui-form-mid">名称：</label>
-                    <div class="layui-input-inline" style="width: 200px;">
-                        <input type="text" name="name" autocomplete="off" class="layui-input" />
-                    </div>
+    <div class="layui-layout layui-layout-admin">
+        <!-- 顶部 -->
+        <div class="layui-header">
+            <a href="./index.html" class="layui-hide-xs">
+                <div class="layui-logo">fsLay1uiPlugin</div>
+            </a>
+            <a href="javascript:;" class="layui-hide-xs">
+                <div class="fsSwitchMenu">
+                    <i class="fa fa-outdent"></i>
                 </div>
-                <div class="layui-inline">
-                    <label class="layui-form-mid">路径：</label>
-                    <div class="layui-input-inline" style="width: 300px;">
-                        <input type="text" name="path" autocomplete="off" class="layui-input" />
-                    </div>
-                </div>
-                <div class="layui-inline">
-                    <div class="layui-input-inline">
-                        <button class="layui-btn" type="button" lay-event="query">
-                            <i class="layui-icon">&#xe615;</i>查询</button>
-                        </button>
+            </a>
+
+            <!-- 顶部菜单 -->
+            <ul class="layui-nav layui-layout-left fsTopMenu" id="fsTopMenu" lay-filter="fsTopMenu">
+            </ul>
+
+            <ul class="layui-nav layui-layout-right">
+                <li class="layui-nav-item layui-hide-xs">
+                    <a href="javascript:;">
+                        <img src="http://q.qlogo.cn/qqapp/101235792/5F344D27449D79D64FE873AF8E907139/100" class="layui-nav-img"> FallSea
+                    </a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a href="javascript:;">基本资料</a>
+                        </dd>
+                        <dd>
+                            <a href="javascript:;">安全设置</a>
+                        </dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item layui-hide-xs">
+                    <a href="javascript:;">
+                        <i class="fa fa-sign-out"></i> 退出</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 左边菜单 -->
+        <div class="layui-side layui-bg-black">
+            <div class="layui-side-scroll">
+                <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+                <ul class="layui-nav layui-nav-tree fsLeftMenu" lay-filter="fsLeftMenu" id="fsLeftMenu">
+                </ul>
+            </div>
+        </div>
+
+        <!-- 右边内容区域 -->
+        <div class="layui-body layui-form">
+            <div class="layui-tab layui-tab-card fsTab" lay-filter="fsTab" lay-allowClose="true">
+
+                <!-- 菜单导航 -->
+                <ul class="layui-tab-title" id="fsTabMenu">
+                    <li class="layui-this" lay-id="111">
+                        <i class="layui-icon">&#xe68e;</i>
+                        <cite>首页</cite>
+                        <p class="layui-tab-close" style="display: none;"></p>
+                    </li>
+                </ul>
+                <!-- 内容 -->
+                <div class="layui-tab-content">
+                    <div class="layui-tab-item layui-show" lay-id="1">
                     </div>
                 </div>
             </div>
-        </form>
-    </div>
-    <div class="layui-form-query" id="actionbar1">
-        <div class="layui-col-md12">
-            <button class="layui-btn" lay-event="create" url="add.html" topWidth="800px" topHeight="500px" topTitle="新增资源">
-                <i class="layui-icon">&#xe654;</i>新增
-            </button>
-            <button class="layui-btn layui-btn-danger" lay-event="delete" delete-by="id" url="api/v1/system/resources/batch" isConfirm="1" confirmMsg="是否确定删除选中的数据？">
-                <i class="layui-icon">&#xe640;</i>批量删除
-            </button>
-            <button class="layui-btn" lay-event="query">
-                <i class="layui-icon">&#x1002;</i>刷新
-            </button>
+        </div>
+
+        <div class="layui-footer">
+            <!-- 底部固定区域 -->
+            ©2017
+            <a href="http://www.fallsea.com" target="_black">www.fallsea.com</a>
+            <button id="donate" class="layui-btn layui-btn-sm layui-btn-danger">捐赠作者</button>
         </div>
     </div>
-    <table id="DataGrid1" class="DataGrid" url="api/v1/system/resources" layout="#layout1" querybar="#querybar1" actionbar="#actionbar1"></table>
-    <div id="layout1" class="layui-layout">
-        <p type="numbers" title="#" />
-        <p checkbox="true" />
-        <p field="name" title="名称" align="center" width="150" sort="true" />
-        <p field="type" title="类型" align="center" width="150" dict="type" />
-        <p field="path" title="资源路径" align="center" width="30%" sort="true" />
-        <p field="state" title="状态" align="center" width="100" templet="#state1" />
-        <p field="remark" title="备注" align="center" width="100" />
-        <p fixed="right" align="center" title="操作" width="220" toolbar="#bar1" />
+
+    <!-- 移动导航 -->
+    <div class="site-tree-mobile layui-hide">
+        <i class="layui-icon">&#xe602;</i>
     </div>
-    <script type="text/html" id="state1">
-        <input type="checkbox" name="state" lay-skin="switch" disabled lay-text="开启|关闭" {{ d.state == 0 ? 'checked' : '' }}>
-    </script>
-    <script type="text/html" id="bar1">
-        <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="open" url="edit.html?id={{d.id}}&readonly=true" topWidth="800px" topHeight="500px" topTitle="查看">查看</a>
-        <a class="layui-btn layui-btn-xs" lay-event="edit" url="edit.html?id={{d.id}}" topWidth="800px" topHeight="500px" topTitle="编辑">编辑</a>
-        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete" url="api/v1/system/resources/{{d.id}}" isConfirm="true" confirmMsg="是否确定删除当前记录？">删除</a>
-    </script>
+    <div class="site-mobile-shade"></div>
 </body>
 
 </html>

@@ -52,6 +52,12 @@ module.exports = {
             chunks: ['main']
         }),
         new htmlWebpackPlugin({
+            filename: 'test_datagrid.html',
+            template: path.resolve(__dirname, 'html/test_datagrid.html'),
+            inject: true,
+            chunks: ['main']
+        }),
+        new htmlWebpackPlugin({
             filename: 'test_treegrid.html',
             template: path.resolve(__dirname, 'html/test_treegrid.html'),
             inject: true,

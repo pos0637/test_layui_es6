@@ -58,7 +58,10 @@ export default class Form extends BaseComponent {
             new Request(this.url).get((result) => {
                 this._renderElements(result);
                 handler();
-            }, handler);
+            }, () => {
+                Hint.showErrorMsg('获取数据失败!');
+                handler();
+            });
         }
         else {
             handler();
