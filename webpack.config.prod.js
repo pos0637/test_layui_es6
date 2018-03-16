@@ -1,5 +1,4 @@
 var path = require('path');
-var htmlWebpackPlugin = require('html-webpack-plugin');
 var copyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
@@ -8,7 +7,7 @@ module.exports = {
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'js/[name]-[hash].bundle.js',
+        filename: 'js/[name].bundle.js',
         publicPath: '/dist/'
     },
     module: {
@@ -27,42 +26,12 @@ module.exports = {
         ]
     },
     plugins: [
-        new htmlWebpackPlugin({
-            filename: 'index.html',
-            template: path.resolve(__dirname, 'html/index.html'),
-            inject: true,
-            chunks: ['main']
-        }),
-        new htmlWebpackPlugin({
-            filename: 'add.html',
-            template: path.resolve(__dirname, 'html/add.html'),
-            inject: true,
-            chunks: ['main']
-        }),
-        new htmlWebpackPlugin({
-            filename: 'edit.html',
-            template: path.resolve(__dirname, 'html/edit.html'),
-            inject: true,
-            chunks: ['main']
-        }),
-        new htmlWebpackPlugin({
-            filename: 'upload.html',
-            template: path.resolve(__dirname, 'html/upload.html'),
-            inject: true,
-            chunks: ['main']
-        }),
-        new htmlWebpackPlugin({
-            filename: 'test_datagrid.html',
-            template: path.resolve(__dirname, 'html/test_datagrid.html'),
-            inject: true,
-            chunks: ['main']
-        }),
-        new htmlWebpackPlugin({
-            filename: 'test_treegrid.html',
-            template: path.resolve(__dirname, 'html/test_treegrid.html'),
-            inject: true,
-            chunks: ['main']
-        }),
+        new copyWebpackPlugin([{
+            from: path.resolve(__dirname, 'html/admin'),
+            to: path.resolve(__dirname, 'dist/admin'),
+            type: 'dir'
+
+        }]),
         new copyWebpackPlugin([{
             from: path.resolve(__dirname, 'html/vendors'),
             to: path.resolve(__dirname, 'dist/vendors'),

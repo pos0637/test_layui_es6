@@ -17,28 +17,6 @@ export default class TreeGrid extends BaseGrid {
     }
 
     render() {
-        // TODO: delete it
-        let data = [
-            {
-                id: 0,
-                name: 'test1',
-                path: 'xxxxx',
-                children: [
-                    { id: 3, name: 'test1_1', path: 'xxxxx', open: true },
-                    { id: 4, name: 'test1_2', path: 'xxxxx', open: true }
-                ]
-            },
-            {
-                id: 1,
-                name: 'test2',
-                path: 'xxxxx',
-                children: [
-                    { id: 5, name: 'test2_1', path: 'xxxxx', open: true },
-                    { id: 6, name: 'test2_2', path: 'xxxxx', open: true }
-                ]
-            },
-        ];
-
         // 获取查询数据
         let params = {};
         (!$.isEmpty(this.querybar)) && $.extend(params, this._getQuerybarData(this.querybar), params);
@@ -49,7 +27,7 @@ export default class TreeGrid extends BaseGrid {
             layui.treeGird({
                 elem: this.element,
                 spreadable: true,
-                nodes: data,
+                nodes: [],
                 layout: this.layout
             });
             this.element.append(content);
@@ -64,7 +42,7 @@ export default class TreeGrid extends BaseGrid {
                 layui.treeGird({
                     elem: this.element,
                     spreadable: true,
-                    nodes: result[$.config.request.response.dataName],
+                    nodes: JSON.parse(result[$.config.request.response.dataName]),
                     layout: this.layout
                 });
                 layui.form.render();
