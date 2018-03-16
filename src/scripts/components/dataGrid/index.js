@@ -205,7 +205,19 @@ export default class DataGrid extends BaseGrid {
     }
 
     _onDeleteSelectedButtonClick(sender) {
-        console.log('_onDeleteSelectedButtonClick');
+        let checked = this.getChecked();
+        if (!checked || !checked.data || (checked.data.length <= 0))
+            return;
+
+        let deleteBy = sender.attr('delete-by');
+        if ($.isEmpty(deleteBy))
+            return;
+
+        new Request(sender.attr('url'), $.getParams(checked.data, deleteBy)).batchDelete(() => {
+            Hint.showSuccessMsg('操作成功!');
+            if (this.refreshable)
+                this.datagrid.reload();
+        });
     }
 }
 

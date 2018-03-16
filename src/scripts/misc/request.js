@@ -29,6 +29,14 @@ export default class Request {
         return this.do('delete', success, error, complete);
     }
 
+    batchDelete(success, error, complete) {
+        this.params = {
+            delete: JSON.stringify(this.params)
+        };
+
+        return this.do('post', success, error, complete);
+    }
+
     /**
      * 执行请求
      * 

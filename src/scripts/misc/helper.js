@@ -77,6 +77,25 @@ $.getUrlParams = function () {
 };
 
 /**
+ * 获取参数列表
+ * 
+ * @param {any} list 列表
+ * @param {any} key 属性名称
+ * @returns 参数列表
+ */
+$.getParams = function (list, key) {
+    if ($.isEmpty(list))
+        return [];
+
+    let ret = [];
+    $.each(list, function (i, item) {
+        ret.push(item[key]);
+    });
+
+    return ret;
+};
+
+/**
  * 获取结果
  * 
  * @param {any} key 属性名称
