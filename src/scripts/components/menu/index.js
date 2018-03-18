@@ -82,7 +82,10 @@ export default class Menu extends BaseComponent {
         if (this.autoload) {
             new Request(this.url).get((result) => {
                 let nodes = JSON.parse(result[$.config.request.response.dataName]);
-                this._buildMenus(nodes);
+                if (nodes.length > 0)
+                    this._buildMenus(nodes);
+                else
+                    handler('<div class="layui-none">无数据</div>');
             }, () => {
                 handler('<div class="layui-none">数据接口请求异常</div>');
             });
