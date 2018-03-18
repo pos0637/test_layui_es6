@@ -46,12 +46,16 @@
             </ul>
         </div>
 
-        <div class="Menu layui-side layui-bg-black" id="menu1" url="api/v1/system/menus">
+        <div class="Menu layui-side layui-bg-black" id="menu1" url="api/v1/system/menus" tabhost="#tabhost1">
         </div>
 
         <div class="layui-body">
-            <!-- 内容主体区域 -->
-            <div style="padding: 15px; height: 300px">内容主体区域</div>
+            <div class="TabHost layui-tab layui-tab-card" id="tabhost1" menu="#menu1" lay-allowClose="true">
+                <ul class="layui-tab-title">
+                </ul>
+                <div class="layui-tab-content">
+                </div>
+            </div>
         </div>
 
         <div class="layui-footer">

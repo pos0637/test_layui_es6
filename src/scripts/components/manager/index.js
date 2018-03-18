@@ -9,6 +9,7 @@ import BaseGrid from '../baseGrid';
 import DataGrid from '../dataGrid';
 import TreeGrid from '../treeGrid';
 import Menu from '../menu';
+import TabHost from '../tabhost';
 
 /**
  * 组件管理器
@@ -25,7 +26,7 @@ export default class Manager {
      */
     static initialize() {
         // TODO: auto generated
-        let classes = [Popup, Hint, Request, Form, Upload, BaseGrid, DataGrid, TreeGrid, Menu];
+        let classes = [Popup, Hint, Request, Form, Upload, BaseGrid, DataGrid, TreeGrid, Menu, TabHost];
         let modules = [];
 
         // 获取所有依赖模块
@@ -64,6 +65,16 @@ export default class Manager {
             Tracker.trace('components render finish');
         });
     }
+
+    /**
+     * 获取组件
+     * 
+     * @param {any} id 组件索引
+     * @returns 组件
+     */
+    static getComponent(id) {
+        return Manager.components[id];
+    }
 }
 
 /** 
@@ -73,4 +84,5 @@ Manager.components = {};
 
 export function initialize() {
     Manager.initialize();
+    $.manager = Manager;
 }

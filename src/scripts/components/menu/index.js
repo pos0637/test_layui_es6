@@ -19,6 +19,11 @@ export default class Menu extends BaseComponent {
         this.url = this.element.attr('url');
 
         /**
+         * 标签容器
+         */
+        this.tabhost = this.element.attr('tabhost');
+
+        /**
          * 是否自动加载
          */
         this.autoload = this.element.getAttr('autoload', 'true') === 'true';
@@ -41,18 +46,18 @@ export default class Menu extends BaseComponent {
                 end: '</ul>'
             },
             level1_open: {
-                begin: '<li class="layui-nav-item layui-nav-itemed" title={{d.name}} url={{d.path}}><a class="" href="javascript:;">{{d.name}}</a><dl class="layui-nav-child">',
-                selected: '<li class="layui-nav-item layui-nav-itemed layui-this" title={{d.name}} url={{d.path}}><a class="" href="javascript:;">{{d.name}}</a><dl class="layui-nav-child">',
+                begin: '<li class="layui-nav-item layui-nav-itemed" uuid={{d.id}} title={{d.name}} url={{d.path}}><a class="" href="javascript:;">{{d.name}}</a><dl class="layui-nav-child">',
+                selected: '<li class="layui-nav-item layui-nav-itemed layui-this" uuid={{d.id}} title={{d.name}} url={{d.path}}><a class="" href="javascript:;">{{d.name}}</a><dl class="layui-nav-child">',
                 end: '</li>'
             },
             level1_close: {
-                begin: '<li class="layui-nav-item" title={{d.name}} url={{d.path}}><a class="" href="javascript:;">{{d.name}}</a><dl class="layui-nav-child">',
-                selected: '<li class="layui-nav-item layui-this" title={{d.name}} url={{d.path}}><a class="" href="javascript:;">{{d.name}}</a><dl class="layui-nav-child">',
+                begin: '<li class="layui-nav-item" uuid={{d.id}} title={{d.name}} url={{d.path}}><a class="" href="javascript:;">{{d.name}}</a><dl class="layui-nav-child">',
+                selected: '<li class="layui-nav-item layui-this" uuid={{d.id}} title={{d.name}} url={{d.path}}><a class="" href="javascript:;">{{d.name}}</a><dl class="layui-nav-child">',
                 end: '</dl></li>'
             },
             level2: {
-                begin: '<dd title={{d.name}} url={{d.path}}><a href="javascript:;">{{d.name}}</a>',
-                selected: '<dd title={{d.name}} url={{d.path}} class="layui-this"><a href="javascript:;">{{d.name}}</a>',
+                begin: '<dd uuid={{d.id}} title={{d.name}} url={{d.path}}><a href="javascript:;">{{d.name}}</a>',
+                selected: '<dd uuid={{d.id}} title={{d.name}} url={{d.path}} class="layui-this"><a href="javascript:;">{{d.name}}</a>',
                 end: '</dd>'
             }
         };
@@ -88,6 +93,26 @@ export default class Menu extends BaseComponent {
     }
 
     /**
+     * 设置选中菜单项目
+     *
+     * @param {any} uuid 菜单项目索引
+     * @memberof Menu
+     */
+    setSelected(uuid) {
+        let items = this.element.find('.layui-this');
+        if (!$.isEmpty(items)) {
+            items.each(function () {
+                $(this).removeClass('layui-this');
+            });
+        }
+
+        items = this.element.find('[uuid="' + uuid + '"]');
+        if (!$.isEmpty(items) && (items.length > 0)) {
+            $(items[0]).addClass('layui-this');
+        }
+    }
+
+    /**
      * 建立菜单
      * 
      * @param {any} nodes 节点列表
@@ -107,12 +132,12 @@ export default class Menu extends BaseComponent {
         // 绑定事件
         layui.element.render();
         layui.element.on('nav(' + this.id + ')', (element) => {
-            this._openTab(element.attr('title'), element.attr('url'));
+            this._openTab(element.attr('title'), element.attr('url'), element.attr('uuid'));
         });
 
         // 打开默认页面
         let element = this.element.find('.layui-this');
-        this._openTab(element.attr('title'), element.attr('url'));
+        this._openTab(element.attr('title'), element.attr('url'), element.attr('uuid'));
     }
 
     /**
@@ -182,9 +207,18 @@ export default class Menu extends BaseComponent {
      * 
      * @param {any} title 标题
      * @param {any} url 地址
+     * @param {any} uuid 菜单索引
      * @memberof Menu
      */
-    _openTab(title, url) {
+    _openTab(title, url, uuid) {
+        if ($.isEmpty(this.tabhost))
+            return;
+
+        let tabhost = $.manager.getComponent(this.tabhost.replace(/#/g, ''));
+        if ($.isEmpty(tabhost))
+            return;
+
+        tabhost.newTab(title, url, uuid);
     }
 }
 
