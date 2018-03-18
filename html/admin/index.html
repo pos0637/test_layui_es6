@@ -12,10 +12,10 @@
     <meta name="format-detection" content="telephone=no" />
     <link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" />
     <link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-    <link rel="stylesheet" type="text/css" href="vendors/layui-treetable/layui/css/layui.css" media="all" />
-    <link rel="stylesheet" type="text/css" href="vendors/layui.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="../vendors/layui-treetable/layui/css/layui.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="../vendors/layui.css" media="all" />
     <script type="text/javascript" src="https://cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
-    <script type="text/javascript" src="vendors/layui-treetable/layui/layui.js"></script>
+    <script type="text/javascript" src="../vendors/layui-treetable/layui/layui.js"></script>
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
     <title></title>
 </head>
@@ -46,49 +46,7 @@
             </ul>
         </div>
 
-        <div class="layui-side layui-bg-black">
-            <div class="layui-side-scroll">
-                <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-                <ul class="layui-nav layui-nav-tree" lay-filter="test">
-                    <li class="layui-nav-item layui-nav-itemed">
-                        <a class="" href="javascript:;">所有商品</a>
-                        <dl class="layui-nav-child">
-                            <dd>
-                                <a href="javascript:;">列表一</a>
-                            </dd>
-                            <dd>
-                                <a href="javascript:;">列表二</a>
-                            </dd>
-                            <dd>
-                                <a href="javascript:;">列表三</a>
-                            </dd>
-                            <dd>
-                                <a href="">超链接</a>
-                            </dd>
-                        </dl>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a href="javascript:;">解决方案</a>
-                        <dl class="layui-nav-child">
-                            <dd>
-                                <a href="javascript:;">列表一</a>
-                            </dd>
-                            <dd>
-                                <a href="javascript:;">列表二</a>
-                            </dd>
-                            <dd>
-                                <a href="">超链接</a>
-                            </dd>
-                        </dl>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a href="">云市场</a>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a href="">发布商品</a>
-                    </li>
-                </ul>
-            </div>
+        <div class="Menu layui-side layui-bg-black" id="menu1" url="api/v1/system/menus">
         </div>
 
         <div class="layui-body">
@@ -101,12 +59,7 @@
             © layui.com - 底部固定区域
         </div>
     </div>
-    <script>
-        //JavaScript代码区域
-        layui.use('element', function () {
-            var element = layui.element;
-        });
-    </script>
+    <script type="text/javascript" src="/dist/js/main.bundle.js"></script>
 </body>
 
 </html>

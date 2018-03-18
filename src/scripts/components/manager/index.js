@@ -8,6 +8,7 @@ import Upload from '../upload';
 import BaseGrid from '../baseGrid';
 import DataGrid from '../dataGrid';
 import TreeGrid from '../treeGrid';
+import Menu from '../menu';
 
 /**
  * 组件管理器
@@ -24,7 +25,7 @@ export default class Manager {
      */
     static initialize() {
         // TODO: auto generated
-        let classes = [Popup, Hint, Request, Form, Upload, BaseGrid, DataGrid, TreeGrid];
+        let classes = [Popup, Hint, Request, Form, Upload, BaseGrid, DataGrid, TreeGrid, Menu];
         let modules = [];
 
         // 获取所有依赖模块
@@ -48,9 +49,9 @@ export default class Manager {
 
                 // 创建组件
                 let elements = $(filter);
-                $(elements).each((index, element) => {
-                    let id = element.getAttribute('id');
-                    let component = new clazz({ id: id, element: $('#' + id) });
+                $(elements).each(function (index, element) {
+                    let id = element.getAttribute('id') || element.getAttribute('lay-filter');
+                    let component = new clazz({ id: id, element: $(this) });
                     Manager.components[element.id] = component;
                 });
             }
