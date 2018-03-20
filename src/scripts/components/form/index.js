@@ -41,6 +41,9 @@ export default class Form extends BaseComponent {
          * 编辑器
          */
         this.editors = {};
+
+        // 填充默认数据
+        this._renderDefaultData();
     }
 
     render() {
@@ -66,6 +69,20 @@ export default class Form extends BaseComponent {
         else {
             handler();
         }
+    }
+
+    /**
+     * 填充默认数据
+     * 
+     * @memberof Form
+     */
+    _renderDefaultData() {
+        this.element.find('input').each(function () {
+            let element = $(this);
+            let value = element.val();
+            if ($.isNotBlank(value))
+                element.val(layui.laytpl(value).render($.urlParams));
+        });
     }
 
     /**
@@ -180,6 +197,7 @@ export default class Form extends BaseComponent {
             this.autoclose && $.closeWindow();
         };
 
+        // 获取提交URL地址
         let url = sender.attr('url');
         if (!$.isEmpty(url))
             url = layui.laytpl(url).render($.urlParams);
