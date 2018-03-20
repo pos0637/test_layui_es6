@@ -46,14 +46,18 @@ export default class Menu extends BaseComponent {
                 end: '</ul>'
             },
             level1_open: {
-                begin: '<li class="layui-nav-item layui-nav-itemed" uuid={{d.id}} title={{d.name}} url={{d.path}}><a class="" href="javascript:;">{{d.name}}</a><dl class="layui-nav-child">',
-                selected: '<li class="layui-nav-item layui-nav-itemed layui-this" uuid={{d.id}} title={{d.name}} url={{d.path}}><a class="" href="javascript:;">{{d.name}}</a><dl class="layui-nav-child">',
+                begin: '<li class="layui-nav-item layui-nav-itemed" uuid={{d.id}} title={{d.name}} url={{d.path}}><a class="" href="javascript:;">{{d.name}}</a>',
+                selected: '<li class="layui-nav-item layui-nav-itemed layui-this" uuid={{d.id}} title={{d.name}} url={{d.path}}><a class="" href="javascript:;">{{d.name}}</a>',
                 end: '</li>'
             },
             level1_close: {
-                begin: '<li class="layui-nav-item" uuid={{d.id}} title={{d.name}} url={{d.path}}><a class="" href="javascript:;">{{d.name}}</a><dl class="layui-nav-child">',
-                selected: '<li class="layui-nav-item layui-this" uuid={{d.id}} title={{d.name}} url={{d.path}}><a class="" href="javascript:;">{{d.name}}</a><dl class="layui-nav-child">',
-                end: '</dl></li>'
+                begin: '<li class="layui-nav-item" uuid={{d.id}} title={{d.name}} url={{d.path}}><a class="" href="javascript:;">{{d.name}}</a>',
+                selected: '<li class="layui-nav-item layui-this" uuid={{d.id}} title={{d.name}} url={{d.path}}><a class="" href="javascript:;">{{d.name}}</a>',
+                end: '</li>'
+            },
+            level2_container: {
+                begin: '<dl class="layui-nav-child">',
+                end: '</dl>'
             },
             level2: {
                 begin: '<dd uuid={{d.id}} title={{d.name}} url={{d.path}}><a href="javascript:;">{{d.name}}</a>',
@@ -184,10 +188,16 @@ export default class Menu extends BaseComponent {
         content = layui.laytpl(content).render(node);
 
         // 遍历子菜单
-        if (!$.isEmpty(node.children)) {
+        if (!$.isEmpty(node.children) && (node.children.length > 0)) {
+            if (level === 1)
+                content += this.layout.level2_container.begin;
+
             $.each(node.children, (index, node) => {
                 content += this._buildSubMenus(node, level + 1);
             });
+
+            if (level === 1)
+                content += this.layout.level2_container.end;
         }
 
         // 建立尾部

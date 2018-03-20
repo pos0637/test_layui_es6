@@ -180,10 +180,14 @@ export default class Form extends BaseComponent {
             this.autoclose && $.closeWindow();
         };
 
+        let url = sender.attr('url');
+        if (!$.isEmpty(url))
+            url = layui.laytpl(url).render($.urlParams);
+
         if (event === 'add')
-            new Request(this.url, params).post(handler);
+            new Request(url, params).post(handler);
         else if (event === 'edit')
-            new Request(this.url, params).put(handler);
+            new Request(url, params).put(handler);
     }
 
     /**
