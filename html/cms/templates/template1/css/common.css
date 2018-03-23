@@ -189,3 +189,25 @@ body {
     text-align: center;
     padding: 20px 20px 20px 20px;
 }
+
+
+/* 跑马灯 */
+
+.marquee {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.marquee ul {
+    list-style: none;
+}
+
+.marquee ul li {
+    float: left;
+    padding: 10px 20px;
+}
+
+.marquee ul li img {
+    display: block;
+}

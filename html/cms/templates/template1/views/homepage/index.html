@@ -15,7 +15,8 @@
     <link rel="stylesheet" type="text/css" href="<%=baseurl%>cms/templates/template1/css/common.css?version=<%=version%>" media="all"
     />
     <script type="text/javascript" src="<%=baseurl%>vendors/layui-treetable/layui/layui.js?version=<%=version%>"></script>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="<%=baseurl%>vendors/jquery/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="<%=baseurl%>vendors/kxbd-marquee/jquery.kxbdmarquee.js"></script>
     <title></title>
 </head>
 
@@ -176,21 +177,21 @@
             <img src="http://y.hy755.cn/7344/diy/pics/20170722/1500710434.png" border="0">
         </div>
         <div class="layui-row">
-            <div class="layui-carousel" id="carousel1">
-                <div carousel-item="">
-                    <div style="width: 260px; height: 230px">
-                        <img src="http://y.hy755.cn/7344/product/pics/20170722/1500710684.jpg" border="0" width="100%">
-                    </div>
-                    <div style="width: 260px; height: 230px">
-                        <img src="http://y.hy755.cn/7344/product/pics/20170722/1500710674.jpg" border="0" width="100%">
-                    </div>
-                    <div style="width: 260px; height: 230px">
-                        <img src="http://y.hy755.cn/7344/product/pics/20170722/1500710715.jpg" border="0" width="100%">
-                    </div>
-                    <div style="width: 260px; height: 230px">
-                        <img src="http://y.hy755.cn/7344/product/pics/20170722/1500710653.jpg" border="0" width="100%">
-                    </div>
-                </div>
+            <div id="marquee1" class="marquee" style="height: 230px">
+                <ul>
+                    <li>
+                        <img src="http://y.hy755.cn/7344/product/pics/20170722/1500710684.jpg" border="0" width="260px" height="230px">
+                    </li>
+                    <li>
+                        <img src="http://y.hy755.cn/7344/product/pics/20170722/1500710674.jpg" border="0" width="260px" height="230px">
+                    </li>
+                    <li>
+                        <img src="http://y.hy755.cn/7344/product/pics/20170722/1500710715.jpg" border="0" width="260px" height="230px">
+                    </li>
+                    <li>
+                        <img src="http://y.hy755.cn/7344/product/pics/20170722/1500710653.jpg" border="0" width="260px" height="230px">
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
@@ -217,13 +218,8 @@
 
     <!-- 脚本 -->
     <script type="text/javascript">
-        layui.use('carousel', function () {
-            var carousel = layui.carousel;
-            carousel.render({
-                elem: '#carousel1',
-                width: '100%',
-                arrow: 'always'
-            });
+        layui.use([], function () {
+            $('#marquee1').kxbdMarquee();
         });
     </script>
 </body>
