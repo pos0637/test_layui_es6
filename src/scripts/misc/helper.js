@@ -50,6 +50,17 @@ $.url = function (url) {
 };
 
 /**
+ * 获取页面URL地址
+ * 
+ * @param {any} url 相对URL地址
+ * @returns URL地址
+ */
+$.view = function (url) {
+    let view = $.config.request.view;
+    return view.scheme + '://' + view.host + ':' + view.port + '/' + view.application + view.path + url;
+};
+
+/**
  * 获取URL请求参数
  *
  * @returns URL请求参数

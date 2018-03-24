@@ -4,6 +4,13 @@
  */
 $.config = {
     request: {
+        view: {
+            scheme: 'http',
+            host: 'localhost',
+            port: '8000',
+            application: '',
+            path: ''
+        },
         server: {
             scheme: 'http',
             host: 'localhost',
