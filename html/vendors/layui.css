@@ -9,6 +9,11 @@ html {
     color: #666;
 }
 
+.layui-tab {
+    margin: 0;
+    text-align: left!important;
+}
+
 .layui-tab-title {
     z-index: 999;
     top: 0;
