@@ -18,6 +18,11 @@ export default class BaseGrid extends BaseComponent {
         this.url = this.element.attr('url');
 
         /** 
+         * 请求参数
+         */
+        this.params = {};
+
+        /** 
          * 查询栏
          */
         this.querybar = $(this.element.attr('querybar'));
@@ -41,6 +46,18 @@ export default class BaseGrid extends BaseComponent {
          * 表格布局
          */
         this.layout = this._getLayout();
+    }
+
+    /**
+     * 设置请求参数
+     * 
+     * @param {any} params 请求参数
+     * @returns 基础表格
+     * @memberof BaseGrid
+     */
+    setParams(params) {
+        this.params = params;
+        return this;
     }
 
     /**

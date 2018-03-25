@@ -8,6 +8,7 @@ import Upload from '../upload';
 import BaseGrid from '../baseGrid';
 import DataGrid from '../dataGrid';
 import TreeGrid from '../treeGrid';
+import Tree from '../tree';
 import Menu from '../menu';
 import TabHost from '../tabhost';
 
@@ -26,7 +27,7 @@ export default class Manager {
      */
     static initialize() {
         // TODO: auto generated
-        let classes = [Popup, Hint, Request, Form, Upload, BaseGrid, DataGrid, TreeGrid, Menu, TabHost];
+        let classes = [Popup, Hint, Request, Form, Upload, BaseGrid, DataGrid, TreeGrid, Tree, Menu, TabHost];
         let modules = [];
 
         // 获取所有依赖模块

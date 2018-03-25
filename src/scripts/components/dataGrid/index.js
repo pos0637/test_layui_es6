@@ -27,7 +27,7 @@ export default class DataGrid extends BaseGrid {
 
     render() {
         // 获取查询数据
-        let params = {};
+        let params = this.params;
         (!$.isEmpty(this.querybar)) && $.extend(params, this._getQuerybarData(this.querybar), params);
 
         let height = this.element.getAttr('height', 'full-135');
@@ -90,7 +90,7 @@ export default class DataGrid extends BaseGrid {
 
         // 绑定排序事件
         layui.table.on('sort(' + this.id + ')', (obj) => {
-            let params = {};
+            let params = this.params;
             (!$.isEmpty(this.querybar)) && $.extend(params, this._getQuerybarData(this.querybar), params);
             $.extend(params, { sortField: obj.field, sortType: obj.type }, params);
             layui.table.reload(this.id, { initSort: obj, where: params });
@@ -158,7 +158,7 @@ export default class DataGrid extends BaseGrid {
     _onQueryButtonClick() {
         if (this.refreshable) {
             // 获取查询数据
-            let params = {};
+            let params = this.params;
             (!$.isEmpty(this.querybar)) && $.extend(params, this._getQuerybarData(this.querybar), params);
 
             this.datagrid.reload({ where: params });
@@ -175,6 +175,10 @@ export default class DataGrid extends BaseGrid {
     _onCreateButtonClick(sender) {
         let params = $.assignAttr({}, sender, 'url', 'topTitle', 'topWidth', 'topHeight', 'isMaximize');
         params.isMaximize = $.isEmpty(params.isMaximize) ? false : params.isMaximize === 'true';
+
+        // 渲染URL地址
+        if (!$.isEmpty(params.url))
+            params.url = layui.laytpl(params.url).render(this.params);
 
         Popup.show(params.topTitle, params.topWidth, params.topHeight, params.url, params.isMaximize, () => {
             if (this.refreshable)
