@@ -90,7 +90,10 @@ export default class DataGrid extends BaseGrid {
 
         // 绑定排序事件
         layui.table.on('sort(' + this.id + ')', (obj) => {
-            layui.table.reload(this.id, { initSort: obj, where: { sortField: obj.field, sortType: obj.type } });
+            let params = {};
+            (!$.isEmpty(this.querybar)) && $.extend(params, this._getQuerybarData(this.querybar), params);
+            $.extend(params, { sortField: obj.field, sortType: obj.type }, params);
+            layui.table.reload(this.id, { initSort: obj, where: params });
         });
 
         // 绑定表格内部按钮事件

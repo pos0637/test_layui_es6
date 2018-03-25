@@ -77,8 +77,7 @@ export default class BaseGrid extends BaseComponent {
                     value = data[element.name] + ',' + value;
             }
 
-            if ($.isNotBlank(value))
-                data[element.name] = value;
+            data[element.name] = value;
         });
 
         return data;
