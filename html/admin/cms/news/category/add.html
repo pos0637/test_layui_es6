@@ -22,8 +22,9 @@
 </head>
 
 <body>
-    <div class="layui-fluid">        
+    <div class="layui-fluid">
         <form class="layui-form" id="edit_form">
+            <input type="hidden" name="parentId" value="{{d.parentId}}" />
             <div class="layui-form-item">
                 <label class="layui-form-label">名称：</label>
                 <div class="layui-input-block">
@@ -32,24 +33,15 @@
                 </div>
             </div>
             <div class="layui-form-item">
-                <label class="layui-form-label">链接：</label>
+                <label class="layui-form-label">优先级：</label>
                 <div class="layui-input-block">
-                    <input type="text" name="link" required="" lay-verType="tips" placeholder="请输入链接" autocomplete="off" class="layui-input"
-                    />
-                </div>
-            </div>
-            <div class="layui-form-item layui-form-text">
-                <label class="layui-form-label">图片：</label>
-                <div class="layui-input-inline">
-                    <input type="text" id="picturePath" name="picturePath" autocomplete="off" disabled="disabled" class="layui-input" />
-                </div>
-                <div class="layui-input-inline">
-                    <button type="button" class="layui-btn" lay-event="upload" path="#picturePath" accept="file" exts="" size="1024">上传图片</button>
+                    <input type="text" name="priority" lay-verType="tips" lay-verify="required" placeholder="请输入优先级0~255" autocomplete="off"
+                        class="layui-input" />
                 </div>
             </div>
             <hr/>
             <div class="layui-form-item" style="text-align: center">
-                <button type="button" lay-filter="edit1" class="layui-btn" lay-submit lay-event="add" url="api/v1/cms/company/profiles">
+                <button type="button" lay-filter="add1" class="layui-btn" lay-submit lay-event="add" url="api/v1/cms/news/newsCategories">
                     <i class="layui-icon">&#xe642;</i>添加</button>
                 <button type="button" class="layui-btn layui-btn-primary" lay-event="close">关闭</button>
             </div>
