@@ -67,6 +67,20 @@
                         class="layui-input" />
                 </div>
             </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">标语1：</label>
+                <div class="layui-input-block">
+                    <input type="text" name="slogan1" required="" lay-verType="tips" lay-verify="required" placeholder="请输入标语1" autocomplete="off"
+                        class="layui-input" />
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">标语2：</label>
+                <div class="layui-input-block">
+                    <input type="text" name="slogan2" required="" lay-verType="tips" lay-verify="required" placeholder="请输入标语2" autocomplete="off"
+                        class="layui-input" />
+                </div>
+            </div>
             <div class="layui-form-item layui-form-text">
                 <label class="layui-form-label">公司标识：</label>
                 <div class="layui-input-inline">
@@ -86,9 +100,25 @@
                 </div>
             </div>
             <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">欢迎图片：</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="welcomePicturePath" name="welcomePicturePath" autocomplete="off" disabled="disabled" class="layui-input"
+                    />
+                </div>
+                <div class="layui-input-inline">
+                    <button type="button" class="layui-btn" lay-event="upload" path="#welcomePicturePath" accept="file" exts="" size="1024">上传图片</button>
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
                 <label class="layui-form-label">公司信息：</label>
                 <div class="layui-input-block">
                     <textarea id="information" name="information" placeholder="请输入公司信息" height="500px"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">联系方式：</label>
+                <div class="layui-input-block">
+                    <textarea id="contact" name="contact" placeholder="请输入联系方式" height="500px"></textarea>
                 </div>
             </div>
             <hr/>
