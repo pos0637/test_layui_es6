@@ -55,9 +55,20 @@ $.url = function (url) {
  * @param {any} url 相对URL地址
  * @returns URL地址
  */
-$.view = function (url) {
+$.viewUrl = function (url) {
     let view = $.config.request.view;
     return view.scheme + '://' + view.host + ':' + view.port + '/' + view.application + view.path + url;
+};
+
+/**
+ * 获取图像URL地址
+ * 
+ * @param {any} url 相对URL地址
+ * @returns URL地址
+ */
+$.imageUrl = function (url) {
+    let server = $.config.request.server;
+    return server.scheme + '://' + server.host + ':' + server.port + '/' + server.application + server.uploadPath + url;
 };
 
 /**

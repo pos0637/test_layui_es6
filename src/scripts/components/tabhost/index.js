@@ -43,7 +43,7 @@ export default class TabHost extends BaseComponent {
         if (this.element.find('li[lay-id="' + uuid + '"]').length === 0) {
             layui.element.tabAdd(this.id, {
                 title: title,
-                content: '<iframe src="' + $.view(url) + '"></iframe>',
+                content: '<iframe src="' + $.viewUrl(url) + '"></iframe>',
                 id: uuid
             });
         }
