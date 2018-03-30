@@ -337,7 +337,7 @@ layui.define("jquery", function(e) {
             var a = this,
                 r = a.options;
             e.children("a").on("click", function(e) {
-                layui.stope(e), r.click(o)
+                layui.stope(e), r.click(o,$(this))
             })
         }, i.prototype.spread = function(e, o) {
             var a = this,

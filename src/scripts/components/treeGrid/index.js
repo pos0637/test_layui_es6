@@ -52,6 +52,7 @@ export default class TreeGrid extends BaseGrid {
             });
         }
         else {
+            this.autoload = true;
             handler('<div class="layui-none">无数据</div>');
         }
     }

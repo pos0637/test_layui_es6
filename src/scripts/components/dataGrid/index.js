@@ -62,6 +62,7 @@ export default class DataGrid extends BaseGrid {
             });
         }
         else {
+            this.autoload = true;
             this.datagrid = layui.table.render({
                 id: this.id,
                 elem: this.element,

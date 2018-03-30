@@ -48,7 +48,7 @@ export default class Tree extends BaseComponent {
                     elem: this.element,
                     spread: true,
                     nodes: JSON.parse(result[$.config.request.response.dataName]),
-                    click: (node) => this._onClick(node)
+                    click: (data, node) => this._onClick(data, node)
                 });
             }, () => {
                 handler('<div class="layui-none">数据接口请求异常</div>');
@@ -61,11 +61,18 @@ export default class Tree extends BaseComponent {
 
     /**
      * 点击事件回调函数
-     * 
-     * @param {any} node 节点 
+     *
+     * @param {any} data 数据
+     * @param {any} node 节点
      * @memberof Tree
      */
-    _onClick(node) {
+    _onClick(data, node) {
+        this.element.find('.selected').each(function () {
+            $(this).removeClass('selected').css('color', 'black');
+        });
+
+        node.addClass('selected').css('color', 'red');
+
         this.onClick && eval(this.onClick);
     }
 }

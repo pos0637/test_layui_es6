@@ -28,7 +28,7 @@
                 <fieldset class="layui-elem-field">
                     <legend>产品分类</legend>
                     <div class="layui-field-box">
-                        <ul class="Tree" id="category1" url="api/v1/cms/product/productCategories" onClick="onCategory1Click(node)"></ul>
+                        <ul class="Tree" id="category1" url="api/v1/cms/product/productCategories" onClick="onCategory1Click(data)"></ul>
                     </div>
                 </fieldset>
             </div>
@@ -71,7 +71,7 @@
                             </div>
                         </div>
                         <div class="layui-row">
-                            <table id="DataGrid1" class="DataGrid" url="api/v1/cms/product/products" layout="#layout1" querybar="#querybar1" actionbar="#actionbar1"></table>
+                            <table id="DataGrid1" class="DataGrid" url="api/v1/cms/product/products" autoload="false" layout="#layout1" querybar="#querybar1" actionbar="#actionbar1"></table>
                             <div id="layout1" class="layui-custom-layout">
                                 <p type="numbers" title="#" />
                                 <p checkbox="true" />
@@ -92,9 +92,9 @@
     </div>
     <script type="text/javascript" src="<%=baseurl%>js/main.bundle.js?version=<%=version%>"></script>
     <script type="text/javascript">
-        function onCategory1Click(node) {
+        function onCategory1Click(data) {
             $.manager.getComponent('DataGrid1').setParams({
-                categoryId: node.id
+                categoryId: data.id
             }).render();
         }
     </script>
