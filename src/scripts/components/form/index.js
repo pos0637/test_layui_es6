@@ -202,10 +202,20 @@ export default class Form extends BaseComponent {
         if (!$.isEmpty(url))
             url = layui.laytpl(url).render($.urlParams);
 
-        if (event === 'add')
+        if (event === 'add') {
             new Request(url, params).post(handler);
-        else if (event === 'edit')
+        }
+        else if (event === 'edit') {
             new Request(url, params).put(handler);
+        }
+        else if (event === 'submit') {
+            let handlers = $.assignAttr({}, sender, 'onSuccess', 'onError');
+            new Request(url, params).post((result) => {
+                handlers.onSuccess && eval(handlers.onSuccess);
+            }, (result) => {
+                handlers.onError && eval(handlers.onError);
+            });
+        }
     }
 
     /**

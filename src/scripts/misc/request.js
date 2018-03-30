@@ -55,6 +55,9 @@ export default class Request {
             async: true,
             data: this.params,
             dataType: 'json',
+            xhrFields: {
+                withCredentials: true
+            },
             success: (result) => {
                 if (!this.checkResult(result)) {
                     error && error(result);
